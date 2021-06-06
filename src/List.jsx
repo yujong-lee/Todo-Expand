@@ -1,7 +1,7 @@
-export default function List({ todos }) {
+export default function List({ tasks }) {
   return (
     <ul>
-      {todos.map(({ id, title, children }) => (
+      {tasks.map(({ id, title, children }) => (
 
         <li key={id}>
           {title}
