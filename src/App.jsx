@@ -1,4 +1,5 @@
 import ListContainer from './ListContainer';
+import InputBox from './InputBox';
 
 export default function App() {
   return (
@@ -7,6 +8,7 @@ export default function App() {
         todo-expand
       </h1>
 
+      <InputBox />
       <ListContainer />
     </>
   );

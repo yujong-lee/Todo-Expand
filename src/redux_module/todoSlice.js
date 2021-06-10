@@ -6,17 +6,19 @@ const { actions, reducer } = createSlice({
   name: 'todo',
 
   initialState: {
+    nextTaskId: 1,
     tasks: [],
   },
 
   reducers: {
     addTodo: (state, action) => {
-      state.tasks.push(action.payload);
+      state.tasks[state.nextTaskId] = action.payload;
+      state.nextTaskId += 1;
     },
+
     deleteTodo: (state, action) => {
-      state.tasks = state.tasks.filter(
-        ({ id }) => id !== action.payload,
-      );
+      const { [action.payload]: toDelete, ...rest } = { ...state.tasks };
+      state.tasks = rest;
     },
   },
 });
@@ -24,7 +26,6 @@ const { actions, reducer } = createSlice({
 export const {
   addTodo,
   deleteTodo,
-
 } = actions;
 
 export default reducer;
