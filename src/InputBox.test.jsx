@@ -2,7 +2,7 @@ import { fireEvent, render } from '@testing-library/react';
 import { useDispatch } from 'react-redux';
 
 import InputBox from './InputBox';
-import { addTodo } from './redux_module/todoSlice';
+import { addTask } from './redux_module/todoSlice';
 
 describe('InputBox', () => {
   it('renders input control', () => {
@@ -26,7 +26,7 @@ describe('InputBox', () => {
     fireEvent.click(getByRole('button', { name: '추가' }));
 
     expect(dispatch).toBeCalledWith(
-      addTodo({ title: '', children: [] }),
+      addTask({ title: '', children: [] }),
     );
   });
 });

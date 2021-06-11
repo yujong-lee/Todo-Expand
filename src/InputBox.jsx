@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addTodo } from './redux_module/todoSlice';
+import { addTask } from './redux_module/todoSlice';
 
 export default function InputBox() {
   const name = '할 일';
@@ -21,7 +21,7 @@ export default function InputBox() {
       <button
         type="button"
         onClick={() => {
-          dispatch(addTodo({ title: taskTitle, children: [] }));
+          dispatch(addTask({ title: taskTitle, children: [] }));
           setTaskTitle('');
         }}
       >

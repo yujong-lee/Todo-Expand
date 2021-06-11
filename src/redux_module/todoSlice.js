@@ -6,26 +6,33 @@ const { actions, reducer } = createSlice({
   name: 'todo',
 
   initialState: {
-    nextTaskId: 1,
-    tasks: [],
+    currentTaskId: '0',
+    nextTaskId: '1',
+    tasks: {},
   },
 
   reducers: {
-    addTodo: (state, action) => {
+    addTask: (state, action) => {
       state.tasks[state.nextTaskId] = action.payload;
-      state.nextTaskId += 1;
+
+      state.nextTaskId = (Number.parseInt(state.nextTaskId, 10) + 1).toString(10);
     },
 
-    deleteTodo: (state, action) => {
-      const { [action.payload]: toDelete, ...rest } = { ...state.tasks };
+    deleteTask: (state, action) => {
+      const { [action.payload]: deleted, ...rest } = { ...state.tasks };
       state.tasks = rest;
+    },
+
+    updateCurrentTaskId: (state, action) => {
+      state.currentTaskId = action.payload;
     },
   },
 });
 
 export const {
-  addTodo,
-  deleteTodo,
+  addTask,
+  deleteTask,
+  updateCurrentTaskId,
 } = actions;
 
 export default reducer;
