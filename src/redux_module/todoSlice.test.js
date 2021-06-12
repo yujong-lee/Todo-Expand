@@ -6,20 +6,52 @@ import reducer,
 } from './todoSlice';
 
 describe('todoSlice', () => {
-  it('adds new task to todoList and updates nextTaskId', () => {
-    const oldState = {
-      nextTaskId: '3',
-      tasks: { },
-    };
-    const newState = {
-      nextTaskId: '4',
-      tasks: { 3: { title: '책 읽기', children: {} } },
-    };
+  context('when currentTaskId is 0', () => {
+    it('adds new task to todoList and updates nextTaskId', () => {
+      const oldState = {
+        currentTaskId: '0',
+        nextTaskId: '3',
+        tasks: { },
+      };
+      const newState = {
+        currentTaskId: '0',
+        nextTaskId: '4',
+        tasks: { 3: { title: '책 읽기', children: {} } },
+      };
 
-    expect(reducer(
-      oldState,
-      addTask({ title: '책 읽기', children: {} }),
-    )).toEqual(newState);
+      expect(reducer(
+        oldState,
+        addTask({ title: '책 읽기', children: {} }),
+      )).toEqual(newState);
+    });
+  });
+
+  context('when currentTaskId is not 0', () => {
+    it('adds new task to todoList, updates nextTaskId and appends taskId to children array', () => {
+      const oldState = {
+        currentTaskId: '1',
+        nextTaskId: '2',
+        tasks: { 1: { title: '책 읽기', children: {} } },
+      };
+
+      const newState = {
+        currentTaskId: '1',
+        nextTaskId: '3',
+        tasks: {
+          1: {
+            title: '책 읽기',
+            children: {
+              2: { title: '애자일 공부', children: {} },
+            },
+          },
+        },
+      };
+
+      expect(reducer(
+        oldState,
+        addTask({ title: '애자일 공부', children: {} }),
+      )).toEqual(newState);
+    });
   });
 
   it('deletes task from todoList', () => {

@@ -13,7 +13,11 @@ const { actions, reducer } = createSlice({
 
   reducers: {
     addTask: (state, action) => {
-      state.tasks[state.nextTaskId] = action.payload;
+      if (state.currentTaskId === '0') {
+        state.tasks[state.nextTaskId] = action.payload;
+      } else {
+        state.tasks[state.currentTaskId].children[state.nextTaskId] = action.payload;
+      }
 
       state.nextTaskId = (Number.parseInt(state.nextTaskId, 10) + 1).toString(10);
     },

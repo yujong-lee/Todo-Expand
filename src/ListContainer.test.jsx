@@ -6,10 +6,10 @@ describe('ListContainer', () => {
   it('renders tasks from redux', () => {
     useSelector.mockImplementation((selector) => selector({
       todo: {
-        tasks: [
-          { id: 1, title: '아무 것도 하지 말자', children: [] },
-          { id: 2, title: '애자일 공부', children: [] },
-        ],
+        tasks: {
+          1: { title: '아무 것도 하지 말자', children: [] },
+          2: { title: '애자일 공부', children: [] },
+        },
       },
     }));
 
