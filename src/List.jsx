@@ -16,21 +16,25 @@ export default function List({ tasks }) {
           const isParent = Object.keys(children).length;
           const name = (isParent) ? '세부' : '완료';
 
-          const handleItemClick = () => dispatch(updateCurrentTaskId(id));
+          const handleItemClick = (num) => dispatch(updateCurrentTaskId(num));
+          const handleCompleteButton = (num) => dispatch(deleteTask(num));
+
+          const handleDetailButton = () => null;
+
           const handleButtonClick = (isParent)
-            ? () => null
-            : () => dispatch(deleteTask(id));
+            ? handleDetailButton
+            : handleCompleteButton;
 
           // Todo 세부버튼
 
           return (
             <li key={id}>
 
-              <h3 onClick={handleItemClick}>
+              <h3 onClick={() => handleItemClick(id)}>
                 {title}
               </h3>
 
-              <button type="button" onClick={handleButtonClick}>
+              <button type="button" onClick={() => handleButtonClick(id)}>
                 {name}
               </button>
 
