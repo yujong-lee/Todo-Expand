@@ -1,17 +1,24 @@
-import { fireEvent, render } from '@testing-library/react';
-import { useDispatch } from 'react-redux';
+import { render } from '@testing-library/react';
 
 import List from './List';
-import { deleteTask } from './redux_module/todoSlice';
 
 describe('List', () => {
+  const renderList = ({ tasks }) => (
+    render(<List
+      tasks={tasks}
+      handleItemClick={jest.fn()}
+      handleCompleteButton={jest.fn()}
+      handleDetailButton={jest.fn()}
+    />)
+  );
+
   it('renders task title', () => {
     const tasks = {
       1: { title: '아무 것도 하지 말자', children: [] },
       2: { title: '애자일 공부', children: [] },
     };
 
-    const { container } = render(<List tasks={tasks} />);
+    const { container } = renderList({ tasks });
 
     expect(container).toHaveTextContent('아무 것도 하지 말자');
     expect(container).toHaveTextContent('애자일 공부');
@@ -26,7 +33,7 @@ describe('List', () => {
         },
       };
 
-      const { getByRole } = render(<List tasks={tasks} />);
+      const { getByRole } = renderList({ tasks });
 
       expect(getByRole('button', { name: '세부' })).toBeInTheDocument();
     });
@@ -38,24 +45,9 @@ describe('List', () => {
         2: { title: '애자일 공부', children: [] },
       };
 
-      const { getByRole } = render(<List tasks={tasks} />);
+      const { getByRole } = renderList({ tasks });
 
       expect(getByRole('button', { name: '완료' })).toBeInTheDocument();
-    });
-
-    it('deletes task with button', () => {
-      const dispatch = jest.fn();
-      useDispatch.mockReturnValue(dispatch);
-
-      const tasks = {
-        2: { title: '애자일 공부', children: [] },
-      };
-
-      const { getByRole } = render(<List tasks={tasks} />);
-
-      fireEvent.click(getByRole('button', { name: '완료' }));
-
-      expect(dispatch).toBeCalledWith(deleteTask('2'));
     });
   });
 });

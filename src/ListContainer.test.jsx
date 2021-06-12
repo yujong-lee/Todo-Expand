@@ -1,21 +1,31 @@
-import { render } from '@testing-library/react';
-import { useSelector } from 'react-redux';
+import { fireEvent, render } from '@testing-library/react';
+import { useDispatch, useSelector } from 'react-redux';
 import ListContainer from './ListContainer';
+import { deleteTask } from './redux_module/todoSlice';
 
 describe('ListContainer', () => {
-  it('renders tasks from redux', () => {
-    useSelector.mockImplementation((selector) => selector({
-      todo: {
-        tasks: {
-          1: { title: '아무 것도 하지 말자', children: [] },
-          2: { title: '애자일 공부', children: [] },
+  const dispatch = jest.fn();
+
+  beforeEach(() => {
+    dispatch.mockClear();
+    useDispatch.mockImplementation(() => dispatch);
+  });
+
+  context('when item has no children', () => {
+    it('deletes task with button', () => {
+      useSelector.mockImplementation((selector) => selector({
+        todo: {
+          tasks: {
+            2: { title: '애자일 공부', children: [] },
+          },
         },
-      },
-    }));
+      }));
 
-    const { container } = render(<ListContainer />);
+      const { getByRole } = render(<ListContainer />);
 
-    expect(container).toHaveTextContent('아무 것도 하지 말자');
-    expect(container).toHaveTextContent('애자일 공부');
+      fireEvent.click(getByRole('button', { name: '완료' }));
+
+      expect(dispatch).toBeCalledWith(deleteTask('2'));
+    });
   });
 });
