@@ -8,16 +8,15 @@ describe('App', () => {
   beforeAll(() => {
     useSelector.mockImplementation((selector) => selector({
       todo: {
-        tasks: [
-          {
-            id: 1,
+        tasks: {
+          1: {
             title: '아무 것도 하지 말자',
-            children: [
-              { id: 3, title: '그냥 누워있자', children: [] },
-            ],
+            children: {
+              3: { title: '그냥 누워있자', children: [] },
+            },
           },
-          { id: 2, title: '애자일 공부', children: [] },
-        ],
+          2: { title: '애자일 공부', children: [] },
+        },
       },
     }));
   });
