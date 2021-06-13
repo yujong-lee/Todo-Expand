@@ -21,7 +21,7 @@ export default function InputBox() {
       <button
         type="button"
         onClick={() => {
-          dispatch(addTask({ title: taskTitle, children: [] }));
+          dispatch(addTask({ title: taskTitle, children: {} }));
           setTaskTitle('');
         }}
       >

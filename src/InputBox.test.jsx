@@ -26,7 +26,7 @@ describe('InputBox', () => {
     fireEvent.click(getByRole('button', { name: '추가' }));
 
     expect(dispatch).toBeCalledWith(
-      addTask({ title: '', children: [] }),
+      addTask({ title: '', children: {} }),
     );
   });
 });
