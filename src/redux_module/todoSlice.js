@@ -7,6 +7,18 @@ function deleteTaskHelper(tasks, id) {
   return rest;
 }
 
+function deleteTaskHelperRecursive(state, idToDelete) {
+  if (Object.keys(state.tasks).includes(idToDelete)) {
+    state.tasks = deleteTaskHelper(state.tasks, idToDelete);
+  } else {
+    Object.entries(state.tasks).forEach(([id, task]) => {
+      if (Object.keys(task.children).includes(idToDelete)) {
+        state.tasks[id].children = deleteTaskHelper(task.children, idToDelete);
+      }
+    });
+  }
+}
+
 const { actions, reducer } = createSlice({
   name: 'todo',
 
@@ -28,16 +40,9 @@ const { actions, reducer } = createSlice({
     },
 
     deleteTask: (state, action) => {
-      // Todo: 재귀(깊이무한), deleteTaskHelper이름 변경
-      if (Object.keys(state.tasks).includes(action.payload)) {
-        state.tasks = deleteTaskHelper(state.tasks, action.payload);
-      } else {
-        Object.entries(state.tasks).forEach(([id, task]) => {
-          if (Object.keys(task.children).includes(action.payload)) {
-            state.tasks[id].children = deleteTaskHelper(task.children, action.payload);
-          }
-        });
-      }
+      // // Todo: 재귀(깊이무한), deleteTaskHelper이름 변경
+
+      deleteTaskHelperRecursive(state, action.payload);
     },
 
     updateCurrentTaskId: (state, action) => {
