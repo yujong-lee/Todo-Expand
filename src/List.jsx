@@ -31,6 +31,18 @@ export default function List({
                 {name}
               </button>
 
+              {(children.length !== 0)
+                ? (
+                  <List
+                    tasks={children}
+                    handleItemClick={handleItemClick}
+                    handleCompleteButton={handleCompleteButton}
+                    handleDetailButton={handleDetailButton}
+                  />
+                )
+
+                : <p />}
+
             </li>
           );
         },

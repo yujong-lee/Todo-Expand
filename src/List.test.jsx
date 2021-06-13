@@ -37,6 +37,27 @@ describe('List', () => {
 
       expect(getByRole('button', { name: '세부' })).toBeInTheDocument();
     });
+
+    it('renders children', () => {
+      const tasks = {
+        1: {
+          title: '메인 테스크 1',
+          children: {
+            2: {
+              title: '',
+              children: {
+                3: { title: '서브 테스크 1', children: {} },
+              },
+            },
+          },
+        },
+      };
+
+      const { container } = renderList({ tasks });
+
+      expect(container).toHaveTextContent('메인 테스크 1');
+      expect(container).toHaveTextContent('서브 테스크 1');
+    });
   });
 
   context('when item has no children', () => {
