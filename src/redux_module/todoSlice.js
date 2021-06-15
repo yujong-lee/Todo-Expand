@@ -2,27 +2,31 @@
 
 import { createSlice } from '@reduxjs/toolkit';
 
-function deleteTaskHelper(tasks, id) {
+function removeTargetFromTask(tasks, id) {
   const { [id]: deleted, ...rest } = { ...tasks };
   return rest;
 }
 
-function deleteTaskHelperRecursive(state, idToDelete) {
+function deleteTaskRecursive(state, idToDelete) {
+  if (!state.tasks) {
+    return {};
+  }
+
   if (Object.keys(state.tasks).includes(idToDelete)) {
-    return { ...state, tasks: deleteTaskHelper(state.tasks, idToDelete) };
+    return { ...state, tasks: removeTargetFromTask(state.tasks, idToDelete) };
   }
 
   const result = Object.entries(state.tasks).reduce((acc, [id, task]) => {
-    if (!Object.keys(task.children).includes(idToDelete)) {
-      return { ...acc, [id]: task };
+    if (Object.keys(task.children).includes(idToDelete)) {
+      return {
+        ...acc,
+        [id]: {
+          title: task.title,
+          children: removeTargetFromTask(task.children, idToDelete),
+        },
+      };
     }
-    return {
-      ...acc,
-      [id]: {
-        title: task.title,
-        children: deleteTaskHelper(task.children, idToDelete),
-      },
-    };
+    return { ...acc, [id]: task };
   }, {});
 
   return { ...state, tasks: result };
@@ -48,7 +52,7 @@ const { actions, reducer } = createSlice({
       state.nextTaskId = (Number.parseInt(state.nextTaskId, 10) + 1).toString(10);
     },
 
-    deleteTask: (state, action) => deleteTaskHelperRecursive(state, action.payload),
+    deleteTask: (state, action) => deleteTaskRecursive(state, action.payload),
 
     updateCurrentTaskId: (state, action) => {
       state.currentTaskId = action.payload;
