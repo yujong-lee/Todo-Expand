@@ -9,14 +9,23 @@ function deleteTaskHelper(tasks, id) {
 
 function deleteTaskHelperRecursive(state, idToDelete) {
   if (Object.keys(state.tasks).includes(idToDelete)) {
-    state.tasks = deleteTaskHelper(state.tasks, idToDelete);
-  } else {
-    Object.entries(state.tasks).forEach(([id, task]) => {
-      if (Object.keys(task.children).includes(idToDelete)) {
-        state.tasks[id].children = deleteTaskHelper(task.children, idToDelete);
-      }
-    });
+    return { ...state, tasks: deleteTaskHelper(state.tasks, idToDelete) };
   }
+
+  const result = Object.entries(state.tasks).reduce((acc, [id, task]) => {
+    if (!Object.keys(task.children).includes(idToDelete)) {
+      return { ...acc, [id]: task };
+    }
+    return {
+      ...acc,
+      [id]: {
+        title: task.title,
+        children: deleteTaskHelper(task.children, idToDelete),
+      },
+    };
+  }, {});
+
+  return { ...state, tasks: result };
 }
 
 const { actions, reducer } = createSlice({
@@ -39,11 +48,7 @@ const { actions, reducer } = createSlice({
       state.nextTaskId = (Number.parseInt(state.nextTaskId, 10) + 1).toString(10);
     },
 
-    deleteTask: (state, action) => {
-      // // Todo: 재귀(깊이무한), deleteTaskHelper이름 변경
-
-      deleteTaskHelperRecursive(state, action.payload);
-    },
+    deleteTask: (state, action) => deleteTaskHelperRecursive(state, action.payload),
 
     updateCurrentTaskId: (state, action) => {
       state.currentTaskId = action.payload;

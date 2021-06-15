@@ -68,7 +68,7 @@ describe('todoSlice', () => {
     });
   });
 
-  context('when tasks to delete is in top level', () => {
+  context('when tasks to delete is in depth 0', () => {
     it('deletes task from tasks', () => {
       const oldState = {
         tasks: {
@@ -87,16 +87,23 @@ describe('todoSlice', () => {
     });
   });
 
-  context('when tasks to delete is not in top level', () => {
+  context('when tasks to delete is in depth 1', () => {
     it('deletes task from tasks and remove id in chidren', () => {
       const oldState = {
         tasks: {
-          1: { title: '책 읽기', children: {} },
+          1: {
+            title: '책 읽기',
+            children: {
+              3: { title: '서브 테스크 1', children: {} },
+              5: { title: '서브 테스크 2', children: {} },
+            },
+          },
+
           2: {
             title: '애자일 공부',
             children: {
-              3: { title: '서브 테스크 1', children: {} },
-              4: { title: '서브 테스크 2', children: {} },
+              4: { title: '서브 테스크 3', children: {} },
+              6: { title: '서브 테스크 4', children: {} },
             },
           },
         },
@@ -104,11 +111,17 @@ describe('todoSlice', () => {
 
       const newState = {
         tasks: {
-          1: { title: '책 읽기', children: {} },
+          1: {
+            title: '책 읽기',
+            children: {
+              3: { title: '서브 테스크 1', children: {} },
+              5: { title: '서브 테스크 2', children: {} },
+            },
+          },
           2: {
             title: '애자일 공부',
             children: {
-              4: { title: '서브 테스크 2', children: {} },
+              6: { title: '서브 테스크 4', children: {} },
             },
           },
         },
@@ -116,7 +129,7 @@ describe('todoSlice', () => {
 
       expect(reducer(
         oldState,
-        deleteTask('3'),
+        deleteTask('4'),
       )).toEqual(newState);
     });
   });
