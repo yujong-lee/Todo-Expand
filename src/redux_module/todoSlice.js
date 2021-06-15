@@ -7,16 +7,16 @@ function removeTargetFromTask(tasks, id) {
   return rest;
 }
 
-function deleteTaskRecursive(state, idToDelete) {
-  if (!state.tasks) {
+function deleteTaskRecursive(tasks, idToDelete) {
+  if (!tasks) {
     return {};
   }
 
-  if (Object.keys(state.tasks).includes(idToDelete)) {
-    return { ...state, tasks: removeTargetFromTask(state.tasks, idToDelete) };
+  if (Object.keys(tasks).includes(idToDelete)) {
+    return removeTargetFromTask(tasks, idToDelete);
   }
 
-  const result = Object.entries(state.tasks).reduce((acc, [id, task]) => {
+  const result = Object.entries(tasks).reduce((acc, [id, task]) => {
     if (Object.keys(task.children).includes(idToDelete)) {
       return {
         ...acc,
@@ -29,7 +29,7 @@ function deleteTaskRecursive(state, idToDelete) {
     return { ...acc, [id]: task };
   }, {});
 
-  return { ...state, tasks: result };
+  return result;
 }
 
 const { actions, reducer } = createSlice({
@@ -52,7 +52,10 @@ const { actions, reducer } = createSlice({
       state.nextTaskId = (Number.parseInt(state.nextTaskId, 10) + 1).toString(10);
     },
 
-    deleteTask: (state, action) => deleteTaskRecursive(state, action.payload),
+    deleteTask: (state, action) => ({
+      ...state,
+      tasks: deleteTaskRecursive(state.tasks, action.payload),
+    }),
 
     updateCurrentTaskId: (state, action) => {
       state.currentTaskId = action.payload;
