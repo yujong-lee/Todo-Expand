@@ -19,17 +19,18 @@ describe('Task', () => {
   beforeAll(() => {
     useSelector.mockImplementation((selector) => selector({
       tasks: {
-        1: { title: '첫번째 할일', subTasks: ['2'] },
-        2: { title: '두번째 할일', subTasks: ['3'] },
+        0: { title: 'root', subTasks: ['1'] },
+        1: { title: '첫번째 할일', subTasks: ['2', '3'] },
+        2: { title: '두번째 할일', subTasks: [] },
         3: { title: '세번째 할일', subTasks: [] },
       },
     }));
   });
 
   it('renders task title', () => {
-    const { container } = renderTask({ id: '1' });
+    const { container } = renderTask({ id: '3' });
 
-    expect(container).toHaveTextContent('첫번째 할일');
+    expect(container).toHaveTextContent('세번째 할일');
   });
 
   context('when subTasks is opened', () => {
@@ -52,6 +53,11 @@ describe('Task', () => {
 
       expect(container).toHaveTextContent('첫번째 할일');
       expect(container).not.toHaveTextContent('두번째 할일');
+      expect(container).not.toHaveTextContent('세번째 할일');
     });
   });
+
+  // context('when subTasks is empty', () => {
+
+  // });
 });
