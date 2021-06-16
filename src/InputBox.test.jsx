@@ -8,7 +8,7 @@ describe('InputBox', () => {
   it('renders input control', () => {
     const { getByRole } = render(<InputBox />);
 
-    expect(getByRole('textbox', { label: '할 일' })).toBeInTheDocument();
+    expect(getByRole('textbox', { name: '할 일' })).toBeInTheDocument();
   });
 
   it('renders add button', () => {
@@ -26,7 +26,7 @@ describe('InputBox', () => {
     fireEvent.click(getByRole('button', { name: '추가' }));
 
     expect(dispatch).toBeCalledWith(
-      addTask({ title: '', children: {} }),
+      addTask({ title: '' }),
     );
   });
 });
