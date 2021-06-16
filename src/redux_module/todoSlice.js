@@ -8,7 +8,9 @@ const { actions, reducer } = createSlice({
   initialState: {
     currentTaskId: '0',
     nextTaskId: '1',
-    tasks: {},
+    tasks: {
+      0: { title: 'root', subTasks: [] },
+    },
   },
 
   reducers: {
