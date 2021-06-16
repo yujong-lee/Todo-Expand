@@ -15,7 +15,7 @@ const { actions, reducer } = createSlice({
     addTask: (state, action) => {
       const { currentTaskId, nextTaskId } = state;
 
-      state.tasks[nextTaskId] = action.payload;
+      state.tasks[nextTaskId] = { ...action.payload, subTasks: [] };
 
       state.tasks[currentTaskId].subTasks.push(nextTaskId);
 

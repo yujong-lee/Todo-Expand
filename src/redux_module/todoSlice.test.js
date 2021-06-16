@@ -21,7 +21,7 @@ describe('todoSlice', () => {
 
     expect(reducer(
       oldState,
-      addTask({ title: '첫번째 할일', subTasks: [] }),
+      addTask({ title: '첫번째 할일' }),
     )).toEqual(newState);
   });
 
