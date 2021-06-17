@@ -11,7 +11,7 @@ export default function Task({ id, isOpen }) {
           <ul>
             {subTasks.map((subTaskId) => (
               <li key={subTaskId}>
-                <Task id={subTaskId} isOpen={true} />
+                <Task id={subTaskId} isOpen={false} />
               </li>
             ))}
           </ul>
