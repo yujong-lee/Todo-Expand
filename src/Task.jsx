@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 
 export default function Task({ id, isOpen }) {
-  const { title, subTasks } = useSelector((state) => state.tasks[id]);
+  const { title, subTasks } = useSelector((state) => state.todo.tasks[id]);
 
   return (
     <>

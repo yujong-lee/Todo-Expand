@@ -18,11 +18,13 @@ describe('Task', () => {
 
   beforeAll(() => {
     useSelector.mockImplementation((selector) => selector({
-      tasks: {
-        0: { title: 'root', subTasks: ['1'] },
-        1: { title: '첫번째 할일', subTasks: ['2', '3'] },
-        2: { title: '두번째 할일', subTasks: [] },
-        3: { title: '세번째 할일', subTasks: [] },
+      todo: {
+        tasks: {
+          0: { title: 'root', subTasks: ['1'] },
+          1: { title: '첫번째 할일', subTasks: ['2', '3'] },
+          2: { title: '두번째 할일', subTasks: [] },
+          3: { title: '세번째 할일', subTasks: [] },
+        },
       },
     }));
   });
