@@ -4,6 +4,7 @@
 import { useDispatch } from 'react-redux';
 
 import InputBox from './InputBox';
+import Task from './Task';
 import { updateCurrentTaskId } from './redux_module/todoSlice';
 
 export default function App() {
@@ -17,6 +18,10 @@ export default function App() {
       </h1>
 
       <InputBox />
+      <Task
+        id="0"
+        isOpen={true}
+      />
     </>
   );
 }
