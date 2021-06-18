@@ -31,6 +31,8 @@ const { actions, reducer } = createSlice({
     deleteTask: (state, action) => {
       const { payload: idToDelete } = action;
 
+      state.currentTaskId = '0';
+
       delete state.tasks[idToDelete];
 
       Object.keys(state.tasks).forEach(

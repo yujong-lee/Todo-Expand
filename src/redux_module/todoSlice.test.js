@@ -47,14 +47,16 @@ describe('todoSlice', () => {
     });
   });
 
-  it('deletes task from tasks', () => {
+  it('deletes task from tasks and reset currentTaskId', () => {
     const oldState = {
+      currentTaskId: '1',
       tasks: {
         0: { title: 'root', subTasks: ['1'] },
         1: { title: '첫번째 할일', subTasks: [] },
       },
     };
     const newState = {
+      currentTaskId: '0',
       tasks: { 0: { title: 'root', subTasks: [] } },
     };
 
@@ -63,6 +65,4 @@ describe('todoSlice', () => {
       deleteTask('1'),
     )).toEqual(newState);
   });
-
-  // Todo: 다 삭제했으면 0으로 커렌트 아이디 바꿔야함
 });
