@@ -15,6 +15,10 @@ const { actions, reducer } = createSlice({
 
   reducers: {
     addTask: (state, action) => {
+      if (action.payload.title === '') {
+        return;
+      }
+
       const { currentTaskId, nextTaskId } = state;
 
       state.tasks[nextTaskId] = { ...action.payload, subTasks: [] };
