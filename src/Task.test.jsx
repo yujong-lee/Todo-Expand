@@ -24,90 +24,107 @@ describe('Task', () => {
     useDispatch.mockReturnValue(dispatch);
 
     useSelector.mockImplementation((selector) => selector({
-      todo: {
-        tasks: {
-          0: { title: 'root', subTasks: ['1'] },
-          1: { title: 'task1', subTasks: ['2', '3'] },
-          2: { title: 'task2', subTasks: [] },
-          3: { title: 'task3', subTasks: [] },
-        },
-      },
+      todo: { tasks: given.tasks },
     }));
   });
 
-  it('renders task title', () => {
-    const { container } = renderTask({ id: '3' });
+  describe('title', () => {
+    given('tasks', () => ({
+      1: { title: 'task1', subTasks: [] },
+    }));
 
-    expect(container).toHaveTextContent('task3');
+    it('is rendered', () => {
+      const { container } = renderTask({ id: '1' });
+
+      expect(container).toHaveTextContent('task1');
+    });
+
+    context('when title is cilcked', () => {
+      it('updates currentTaskId', () => {
+        const { getByText } = renderTask({ id: '1' });
+        fireEvent.click(getByText('task1'));
+
+        expect(dispatch).toBeCalledWith(updateCurrentTaskId('1'));
+      });
+    });
   });
 
   context('when subTasks is opened', () => {
     given('isOpen', () => true);
+    given('tasks', () => ({
+      1: { title: 'task1', subTasks: ['2'] },
+      2: { title: 'task2', subTasks: [] },
+    }));
 
     it('renders subTask title', () => {
       const { container } = renderTask({ id: '1' });
 
       expect(container).toHaveTextContent('task1');
       expect(container).toHaveTextContent('task2');
-      expect(container).toHaveTextContent('task3');
     });
   });
 
   context('when subTasks is not opened', () => {
     given('isOpen', () => false);
+    given('tasks', () => ({
+      1: { title: 'task1', subTasks: ['2'] },
+      2: { title: 'task2', subTasks: [] },
+    }));
 
     it("doesn't renders subTask title", () => {
       const { container } = renderTask({ id: '1' });
 
       expect(container).toHaveTextContent('task1');
       expect(container).not.toHaveTextContent('task2');
-      expect(container).not.toHaveTextContent('task3');
     });
-  });
-
-  context('when title is cilcked', () => {
-    it('updates currentTaskId', () => {
-      const { getByText } = renderTask({ id: '1' });
-      fireEvent.click(getByText('task1'));
-
-      expect(dispatch).toBeCalledWith(updateCurrentTaskId('1'));
-    });
-  });
-
-  it('renders "세부" button to open subTasks', () => {
-    given('isOpen', () => true);
-
-    const { container, getByTestId } = renderTask({ id: '0' });
-
-    expect(container).toHaveTextContent('task2');
-    expect(container).toHaveTextContent('task3');
-
-    fireEvent.click(getByTestId('button-1'));
-
-    expect(container).not.toHaveTextContent('task2');
-    expect(container).not.toHaveTextContent('task3');
   });
 
   context('when subTasks is empty', () => {
-    it('renders "완료" button', () => {
-      const { getByRole, queryByRole } = renderTask({ id: '3' });
+    given('tasks', () => ({
+      1: { title: 'task1', subTasks: [] },
+    }));
 
-      expect(queryByRole('button', { name: '세부' })).not.toBeInTheDocument();
+    it('renders "완료" button', () => {
+      const { getByRole } = renderTask({ id: '1' });
 
       fireEvent.click(getByRole('button', { name: '완료' }));
 
-      expect(dispatch).toBeCalledWith(deleteTask('3'));
+      expect(dispatch).toBeCalledWith(deleteTask('1'));
     });
   });
 
   context('when subTasks is not empty', () => {
-    given('isOpen', () => false);
+    given('tasks', () => ({
+      1: { title: 'task1', subTasks: ['2'] },
+      2: { title: 'task2', subTasks: [] },
+    }));
 
-    it('renders "완료" button', () => {
-      const { getByRole, queryByRole } = renderTask({ id: '1' });
+    it('renders "펼치기" button to unfold subTasks', () => {
+      given('isOpen', () => false);
 
-      expect(queryByRole('button', { name: '완료' })).not.toBeInTheDocument();
-      expect(getByRole('button', { name: '세부' })).toBeInTheDocument();
+      const { container, getByRole } = renderTask({ id: '1' });
+
+      expect(container).toHaveTextContent('task1');
+      expect(container).not.toHaveTextContent('task2');
+
+      fireEvent.click(getByRole('button', { name: '펼치기' }));
+
+      expect(container).toHaveTextContent('task1');
+      expect(container).toHaveTextContent('task2');
+    });
+
+    it('renders "접기" button to fold subTasks', () => {
+      given('isOpen', () => true);
+
+      const { container, getByRole } = renderTask({ id: '1' });
+
+      expect(container).toHaveTextContent('task1');
+      expect(container).toHaveTextContent('task2');
+
+      fireEvent.click(getByRole('button', { name: '접기' }));
+
+      expect(container).toHaveTextContent('task1');
+      expect(container).not.toHaveTextContent('task2');
     });
   });
 });

@@ -7,16 +7,23 @@ export default function Task({ id, isOpen = true }) {
   const dispatch = useDispatch();
 
   const { title, subTasks } = useSelector((state) => state.todo.tasks[id]);
+  const isSubTasksEmpty = (subTasks.length === 0);
 
   const [isSubTasksOpen, setIsSubTasksOpen] = useState(isOpen);
 
+  const handleClickComplete = () => dispatch(deleteTask(id));
+  const handleCickDetail = () => setIsSubTasksOpen(!isSubTasksOpen);
+
   const handleClickTitle = () => dispatch(updateCurrentTaskId(id));
+  const handleClickButton = (isSubTasksEmpty) ? handleClickComplete : handleCickDetail;
 
-  const buttonName = (subTasks.length === 0) ? '완료' : '세부';
+  const buttonName = () => {
+    if (isSubTasksEmpty) {
+      return '완료';
+    }
 
-  const handleClickButton = (subTasks.length === 0) // Todo: 이름 변경
-    ? () => dispatch(deleteTask(id))
-    : () => setIsSubTasksOpen(!isSubTasksOpen);
+    return (isSubTasksOpen) ? '접기' : '펼치기';
+  };
 
   return (
     <>
@@ -32,7 +39,7 @@ export default function Task({ id, isOpen = true }) {
         onClick={handleClickButton}
         data-testid={`button-${id}`}
       >
-        {buttonName}
+        {buttonName()}
       </button>
 
       {isSubTasksOpen
