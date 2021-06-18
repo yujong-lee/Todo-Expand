@@ -17,6 +17,6 @@ describe('App', () => {
 
     const { container } = render(<App />);
 
-    expect(container).toHaveTextContent('todo-expand');
+    expect(container).toHaveTextContent('Todo-expand');
   });
 });
