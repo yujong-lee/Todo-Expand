@@ -27,20 +27,26 @@ export default function Task({ id, isOpen = true }) {
 
   return (
     <>
-      <button
-        type="button"
-        onClick={handleClickTitle}
-      >
-        {title}
-      </button>
+      {(id !== '0')
+        ? (
+          <>
+            <button
+              type="button"
+              onClick={handleClickTitle}
+            >
+              {title}
+            </button>
 
-      <button
-        type="button"
-        onClick={handleClickButton}
-        data-testid={`button-${id}`}
-      >
-        {buttonName()}
-      </button>
+            <button
+              type="button"
+              onClick={handleClickButton}
+              data-testid={`button-${id}`}
+            >
+              {buttonName()}
+            </button>
+          </>
+        )
+        : null}
 
       {isSubTasksOpen
         ? (

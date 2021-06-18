@@ -49,6 +49,18 @@ describe('Task', () => {
     });
   });
 
+  context('when id is 0', () => {
+    given('tasks', () => ({
+      0: { title: 'root', subTasks: [] },
+    }));
+
+    it('is not rendered', () => {
+      const { queryByText } = renderTask({ id: '0' });
+
+      expect(queryByText('root')).not.toBeInTheDocument();
+    });
+  });
+
   context('when subTasks is opened', () => {
     given('isOpen', () => true);
     given('tasks', () => ({
