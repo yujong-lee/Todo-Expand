@@ -18,10 +18,8 @@ export default function App() {
       </h1>
 
       <InputBox />
-      <Task
-        id="0"
-        isOpen={true}
-      />
+      <br />
+      <Task id="0" />
     </>
   );
 }
