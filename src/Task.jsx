@@ -7,7 +7,9 @@ export default function Task({ id, isOpen = true }) {
   const dispatch = useDispatch();
 
   const { title, subTasks } = useSelector((state) => state.todo.tasks[id]);
+
   const isSubTasksEmpty = (subTasks.length === 0);
+  const isRootTask = (id === '0');
 
   const [isSubTasksOpen, setIsSubTasksOpen] = useState(isOpen);
 
@@ -27,7 +29,7 @@ export default function Task({ id, isOpen = true }) {
 
   return (
     <>
-      {(id !== '0')
+      {!isRootTask
         ? (
           <>
             <button
