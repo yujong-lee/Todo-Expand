@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import given from 'given2';
 
 import Task from './Task';
-import { updateCurrentTaskId } from './redux_module/todoSlice';
+import { deleteTask, updateCurrentTaskId } from './redux_module/todoSlice';
 
 jest.mock('react-redux');
 
@@ -87,6 +87,30 @@ describe('Task', () => {
     expect(container).not.toHaveTextContent('task2');
     expect(container).not.toHaveTextContent('task3');
   });
+
+  context('when subTasks is empty', () => {
+    it('renders "완료" button', () => {
+      const { getByRole, queryByRole } = renderTask({ id: '3' });
+
+      expect(queryByRole('button', { name: '세부' })).not.toBeInTheDocument();
+
+      fireEvent.click(getByRole('button', { name: '완료' }));
+
+      expect(dispatch).toBeCalledWith(deleteTask('3'));
+    });
+  });
+
+  context('when subTasks is not empty', () => {
+    given('isOpen', () => false);
+
+    it('renders "완료" button', () => {
+      const { getByRole, queryByRole } = renderTask({ id: '1' });
+
+      expect(queryByRole('button', { name: '완료' })).not.toBeInTheDocument();
+      expect(getByRole('button', { name: '세부' })).toBeInTheDocument();
+    });
+  });
 });
 
-// Todo: 펼쳤을 때 하위꺼 다 펼치는 문제 -> 결국 리덕스로 관리해야하나
+// Todo: 펼쳤을 때 하위꺼 다 펼치는 문제 -> 결국 리덕스로 관리해야하나 useState때문에 테스트하기로 어려움
+// given때문에 테스트의도 혼란. testid로 다 할까

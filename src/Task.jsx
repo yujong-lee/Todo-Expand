@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { updateCurrentTaskId } from './redux_module/todoSlice';
+import { deleteTask, updateCurrentTaskId } from './redux_module/todoSlice';
 
 export default function Task({ id, isOpen = true }) {
   const dispatch = useDispatch();
@@ -10,23 +10,29 @@ export default function Task({ id, isOpen = true }) {
 
   const [isSubTasksOpen, setIsSubTasksOpen] = useState(isOpen);
 
-  const handleClick = () => dispatch(updateCurrentTaskId(id));
+  const handleClickTitle = () => dispatch(updateCurrentTaskId(id));
+
+  const buttonName = (subTasks.length === 0) ? '완료' : '세부';
+
+  const handleClickButton = (subTasks.length === 0) // Todo: 이름 변경
+    ? () => dispatch(deleteTask(id))
+    : () => setIsSubTasksOpen(!isSubTasksOpen);
 
   return (
     <>
       <button
         type="button"
-        onClick={handleClick}
+        onClick={handleClickTitle}
       >
         {title}
       </button>
 
       <button
         type="button"
-        onClick={() => setIsSubTasksOpen(!isSubTasksOpen)}
+        onClick={handleClickButton}
         data-testid={`button-${id}`}
       >
-        세부
+        {buttonName}
       </button>
 
       {isSubTasksOpen
