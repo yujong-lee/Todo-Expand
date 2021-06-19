@@ -1,7 +1,9 @@
+/* eslint-disable import/no-cycle */
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import MainTask from './MainTask';
+import SubTasks from './SubTasks';
 
 export default function Task({ id, isOpen = true }) {
   const { subTasks } = useSelector((state) => state.todo.tasks[id]);
@@ -17,15 +19,7 @@ export default function Task({ id, isOpen = true }) {
       />
 
       {isSubTasksOpen
-        ? (
-          <ul>
-            {subTasks.map((subTaskId) => (
-              <li key={subTaskId}>
-                <Task id={subTaskId} />
-              </li>
-            ))}
-          </ul>
-        )
+        ? (<SubTasks subTasks={subTasks} />)
         : null}
     </>
   );
