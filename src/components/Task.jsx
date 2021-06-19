@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import MainTask from './MainTask';
+import MainTaskContainer from './MainTaskContainer';
 import SubTasks from './SubTasks';
 
 export default function Task({ id, isOpen = true }) {
@@ -12,7 +12,7 @@ export default function Task({ id, isOpen = true }) {
 
   return (
     <>
-      <MainTask
+      <MainTaskContainer
         id={id}
         isSubTasksOpen={isSubTasksOpen}
         setIsSubTasksOpen={setIsSubTasksOpen}

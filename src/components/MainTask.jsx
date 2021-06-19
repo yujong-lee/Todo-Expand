@@ -1,26 +1,12 @@
-import { useDispatch, useSelector } from 'react-redux';
-
-import { deleteTask, updateCurrentTaskId } from '../redux_module/todoSlice';
-
-import TaskTitle from './TaskTitle';
 import CompleteButton from './CompleteButton';
 import SubTasksToggle from './SubTasksToggle';
+import TaskTitle from './TaskTitle';
 
-export default function MainTask({ id, isSubTasksOpen, setIsSubTasksOpen }) {
-  const dispatch = useDispatch();
-
-  const { title, subTasks } = useSelector((state) => state.todo.tasks[id]);
-  const currentTaskId = useSelector((state) => state.todo.currentTaskId);
-
-  const isSubTasksEmpty = (subTasks.length === 0);
-  const isRootTask = (id === '0');
-  const isSelected = (currentTaskId === id);
-
-  const handleClickTitle = () => dispatch(updateCurrentTaskId(id));
-
-  const handleClickComplete = () => dispatch(deleteTask(id));
-  const handleClickDetail = () => setIsSubTasksOpen(!isSubTasksOpen);
-
+export default function MainTask({
+  id, title,
+  isSelected, isRootTask, isSubTasksEmpty, isSubTasksOpen,
+  handleClickTitle, handleClickComplete, handleClickDetail,
+}) {
   return (
     <>
       {isRootTask
