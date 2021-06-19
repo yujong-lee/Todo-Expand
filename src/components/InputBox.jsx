@@ -1,11 +1,18 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+
 import { addTask } from '../redux_module/todoSlice';
 
 export default function InputBox() {
   const dispatch = useDispatch();
 
   const [taskTitle, setTaskTitle] = useState('');
+
+  const handleChange = (e) => setTaskTitle(e.target.value);
+  const handleClick = () => {
+    dispatch(addTask({ title: taskTitle }));
+    setTaskTitle('');
+  };
 
   return (
     <>
@@ -17,15 +24,12 @@ export default function InputBox() {
         id="input-task"
         placeholder="할 일"
         value={taskTitle}
-        onChange={(e) => setTaskTitle(e.target.value)}
+        onChange={handleChange}
       />
 
       <button
         type="button"
-        onClick={() => {
-          dispatch(addTask({ title: taskTitle }));
-          setTaskTitle('');
-        }}
+        onClick={handleClick}
       >
         추가
       </button>
