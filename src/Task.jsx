@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 
 import { deleteTask, updateCurrentTaskId } from './redux_module/todoSlice';
 import { original, highlight } from './fixture/color';
+import SubTasksToggle from './SubTasksToggle';
 
 export default function Task({ id, isOpen = true }) {
   const dispatch = useDispatch();
@@ -21,7 +22,7 @@ export default function Task({ id, isOpen = true }) {
   const handleCickDetail = () => setIsSubTasksOpen(!isSubTasksOpen);
 
   const handleClickTitle = () => dispatch(updateCurrentTaskId(id));
-  const handleClickButton = (isSubTasksEmpty) ? handleClickComplete : handleCickDetail;
+  const handleToggle = (isSubTasksEmpty) ? handleClickComplete : handleCickDetail;
 
   const Button = styled.button`
   background-color: ${(props) => ((props.isSelected) ? highlight : original)};
@@ -33,18 +34,11 @@ export default function Task({ id, isOpen = true }) {
   }
 `;
 
-  const buttonName = () => {
-    if (isSubTasksEmpty) {
-      return '완료';
-    }
-
-    return (isSubTasksOpen) ? '접기' : '펼치기';
-  };
-
   return (
     <>
-      {!isRootTask
-        ? (
+      {isRootTask
+        ? null
+        : (
           <>
             <Button
               type="button"
@@ -54,16 +48,14 @@ export default function Task({ id, isOpen = true }) {
               {title}
             </Button>
 
-            <button
-              type="button"
-              onClick={handleClickButton}
-              data-testid={`button-${id}`}
-            >
-              {buttonName()}
-            </button>
+            <SubTasksToggle
+              taskId={id}
+              isOpen={isSubTasksOpen}
+              isEmpty={isSubTasksEmpty}
+              onClick={handleToggle}
+            />
           </>
-        )
-        : null}
+        )}
 
       {isSubTasksOpen
         ? (
