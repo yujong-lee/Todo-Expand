@@ -18,11 +18,21 @@ export default function Task({ id, isOpen = true }) {
   const [isSubTasksOpen, setIsSubTasksOpen] = useState(isOpen);
 
   const handleClickComplete = () => dispatch(deleteTask(id));
-  const handleCickDetail = () => setIsSubTasksOpen(!isSubTasksOpen);
+  const handleClickDetail = () => setIsSubTasksOpen(!isSubTasksOpen);
 
   const handleClickTitle = () => dispatch(updateCurrentTaskId(id));
-  const handleClickToggle = (isSubTasksEmpty) ? handleClickComplete : handleCickDetail;
 
+  function CompleteButton() {
+    return (
+      <button
+        type="button"
+        onClick={handleClickComplete}
+        data-testid={`button-${id}`}
+      >
+        완료
+      </button>
+    );
+  }
   return (
     <>
       {isRootTask
@@ -35,12 +45,16 @@ export default function Task({ id, isOpen = true }) {
               handleClick={handleClickTitle}
             />
 
-            <SubTasksToggle // Todo: 완료 와 토글 기능 분리
-              taskId={id}
-              isOpen={isSubTasksOpen}
-              isEmpty={isSubTasksEmpty}
-              onClick={handleClickToggle}
-            />
+            {isSubTasksEmpty
+              ? (<CompleteButton />)
+              : (
+                <SubTasksToggle
+                  taskId={id}
+                  isOpen={isSubTasksOpen}
+                  isEmpty={isSubTasksEmpty}
+                  onClick={handleClickDetail}
+                />
+              )}
           </>
         )}
 

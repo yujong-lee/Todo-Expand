@@ -12,7 +12,6 @@ describe('SubTasksToggle', () => {
         <SubTasksToggle
           taskId="1"
           isOpen={given.isOpen}
-          isEmpty={given.isEmpty}
           onClick={handleClick}
         />
       ))
@@ -36,35 +35,21 @@ describe('SubTasksToggle', () => {
     expect(handleClick).toBeCalled();
   });
 
-  context('when subTasks is empty', () => {
-    given('isEmpty', () => true);
-
-    it('renders "완료" button', () => {
+  context('when subTasks is opened', () => {
+    given('isOpen', () => true);
+    it('renders "접기" button', () => {
       const { getByRole } = renderSubTasksToggle();
 
-      expect(getByRole('button', { name: '완료' })).toBeInTheDocument();
+      expect(getByRole('button', { name: '접기' })).toBeInTheDocument();
     });
   });
 
-  context('when subTasks is not empty', () => {
-    given('isEmpty', () => false);
+  context('when subTasks is closed', () => {
+    given('isOpen', () => false);
+    it('renders "펼치기" button', () => {
+      const { getByRole } = renderSubTasksToggle();
 
-    context('when subTasks is opened', () => {
-      given('isOpen', () => true);
-      it('renders "접기" button', () => {
-        const { getByRole } = renderSubTasksToggle();
-
-        expect(getByRole('button', { name: '접기' })).toBeInTheDocument();
-      });
-    });
-
-    context('when subTasks is closed', () => {
-      given('isOpen', () => false);
-      it('renders "펼치기" button', () => {
-        const { getByRole } = renderSubTasksToggle();
-
-        expect(getByRole('button', { name: '펼치기' })).toBeInTheDocument();
-      });
+      expect(getByRole('button', { name: '펼치기' })).toBeInTheDocument();
     });
   });
 });
