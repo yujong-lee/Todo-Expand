@@ -2,7 +2,7 @@ import { render } from '@testing-library/react';
 import given from 'given2';
 
 import TaskTitle from './TaskTitle';
-import { highlight, original } from './fixture/color';
+import { highlight, original } from '../fixture/color';
 
 describe('TaskTitle', () => {
   it('renders button with title', () => {

@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { original, highlight } from './fixture/color';
+import { original, highlight } from '../fixture/color';
 
 export default function TaskTitle({ title, isSelected, handleClick }) {
   const Button = styled.button`

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { deleteTask, updateCurrentTaskId } from './redux_module/todoSlice';
+import { deleteTask, updateCurrentTaskId } from '../redux_module/todoSlice';
 import TaskTitle from './TaskTitle';
 import CompleteButton from './CompleteButton';
 import SubTasksToggle from './SubTasksToggle';

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import given from 'given2';
 
 import Task from './Task';
-import { deleteTask, updateCurrentTaskId } from './redux_module/todoSlice';
+import { deleteTask, updateCurrentTaskId } from '../redux_module/todoSlice';
 
 jest.mock('react-redux');
 

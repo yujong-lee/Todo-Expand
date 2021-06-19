@@ -3,8 +3,8 @@
 import { useDispatch, useSelector } from 'react-redux';
 import styled from '@emotion/styled';
 
-import InputBox from './InputBox';
-import Task from './Task';
+import InputBox from './components/InputBox';
+import Task from './components/Task';
 import { updateCurrentTaskId } from './redux_module/todoSlice';
 import { original, highlight } from './fixture/color';
 

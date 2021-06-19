@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addTask } from './redux_module/todoSlice';
+import { addTask } from '../redux_module/todoSlice';
 
 export default function InputBox() {
   const dispatch = useDispatch();
