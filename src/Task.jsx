@@ -2,8 +2,9 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { deleteTask, updateCurrentTaskId } from './redux_module/todoSlice';
-import SubTasksToggle from './SubTasksToggle';
 import TaskTitle from './TaskTitle';
+import CompleteButton from './CompleteButton';
+import SubTasksToggle from './SubTasksToggle';
 
 export default function Task({ id, isOpen = true }) {
   const dispatch = useDispatch();
@@ -17,22 +18,11 @@ export default function Task({ id, isOpen = true }) {
 
   const [isSubTasksOpen, setIsSubTasksOpen] = useState(isOpen);
 
+  const handleClickTitle = () => dispatch(updateCurrentTaskId(id));
+
   const handleClickComplete = () => dispatch(deleteTask(id));
   const handleClickDetail = () => setIsSubTasksOpen(!isSubTasksOpen);
 
-  const handleClickTitle = () => dispatch(updateCurrentTaskId(id));
-
-  function CompleteButton() {
-    return (
-      <button
-        type="button"
-        onClick={handleClickComplete}
-        data-testid={`button-${id}`}
-      >
-        완료
-      </button>
-    );
-  }
   return (
     <>
       {isRootTask
@@ -46,7 +36,12 @@ export default function Task({ id, isOpen = true }) {
             />
 
             {isSubTasksEmpty
-              ? (<CompleteButton />)
+              ? (
+                <CompleteButton
+                  id={id}
+                  handleClick={handleClickComplete}
+                />
+              )
               : (
                 <SubTasksToggle
                   taskId={id}
