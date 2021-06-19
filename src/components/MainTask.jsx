@@ -1,6 +1,6 @@
+import TaskTitle from './TaskTitle';
 import CompleteButton from './CompleteButton';
 import SubTasksToggle from './SubTasksToggle';
-import TaskTitle from './TaskTitle';
 
 export default function MainTask({
   id, title,

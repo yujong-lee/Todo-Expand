@@ -1,6 +1,4 @@
-export default function SubTasksToggle({
-  taskId, isOpen, onClick,
-}) {
+export default function SubTasksToggle({ taskId, isOpen, onClick }) {
   return (
     <button
       type="button"
