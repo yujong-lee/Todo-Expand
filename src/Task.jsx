@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import styled from '@emotion/styled';
 
 import { deleteTask, updateCurrentTaskId } from './redux_module/todoSlice';
-import { original, highlight } from './fixture/color';
 import SubTasksToggle from './SubTasksToggle';
+import TaskTitle from './TaskTitle';
 
 export default function Task({ id, isOpen = true }) {
   const dispatch = useDispatch();
@@ -22,17 +21,7 @@ export default function Task({ id, isOpen = true }) {
   const handleCickDetail = () => setIsSubTasksOpen(!isSubTasksOpen);
 
   const handleClickTitle = () => dispatch(updateCurrentTaskId(id));
-  const handleToggle = (isSubTasksEmpty) ? handleClickComplete : handleCickDetail;
-
-  const Button = styled.button`
-  background-color: ${(props) => ((props.isSelected) ? highlight : original)};
-  font-size: 14px;
-  margin-bottom: 8px;
-  color: black;
-  &:hover {
-    color: white;
-  }
-`;
+  const handleClickToggle = (isSubTasksEmpty) ? handleClickComplete : handleCickDetail;
 
   return (
     <>
@@ -40,19 +29,17 @@ export default function Task({ id, isOpen = true }) {
         ? null
         : (
           <>
-            <Button
-              type="button"
-              onClick={handleClickTitle}
+            <TaskTitle
+              title={title}
               isSelected={isSelected}
-            >
-              {title}
-            </Button>
+              handleClick={handleClickTitle}
+            />
 
-            <SubTasksToggle
+            <SubTasksToggle // Todo: 완료 와 토글 기능 분리
               taskId={id}
               isOpen={isSubTasksOpen}
               isEmpty={isSubTasksEmpty}
-              onClick={handleToggle}
+              onClick={handleClickToggle}
             />
           </>
         )}
