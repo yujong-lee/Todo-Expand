@@ -1,7 +1,12 @@
 /* eslint-disable import/no-cycle */
 import Task from './Task';
 
-export default function SubTasks({ subTasks }) {
+interface TaskItem {
+  title: string
+  subTask: string[]
+}
+
+export default function SubTasks({ subTasks }): JSX.Element {
   return (
     <ul>
       {subTasks.map((subTaskId) => (

@@ -57,5 +57,16 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     'testing-library/prefer-screen-queries': 'off',
     'react/jsx-boolean-value': 'off',
+
+    'import/extensions': [
+      'error',
+      'ignorePackages',
+      {
+        js: 'never',
+        jsx: 'never',
+        ts: 'never',
+        tsx: 'never',
+      },
+    ],
   },
 };
