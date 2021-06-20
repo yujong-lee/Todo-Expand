@@ -7,9 +7,7 @@
     "start": "webpack serve",
     "test:unit": "jest",
     "coverage": "npm run test:unit -- --coverage",
-    "test:e2e": "codeceptjs run --steps",
-    "test": "npm run coverage",
-    "lint": "eslint --ext js,jsx ."
+    "test": "npm run test:unit"
   },
   "keywords": [],
   "author": "",
