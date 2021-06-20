@@ -24,7 +24,7 @@ describe('todoSlice', () => {
 
       expect(reducer(
         oldState,
-        addTask({ title: 'task2' }),
+        addTask('task2'),
       )).toEqual(newState);
     });
   });
@@ -42,7 +42,7 @@ describe('todoSlice', () => {
 
       expect(reducer(
         oldState,
-        addTask({ title: '' }),
+        addTask(''),
       )).toEqual(oldState);
     });
   });

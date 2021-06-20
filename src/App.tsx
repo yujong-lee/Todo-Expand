@@ -39,7 +39,5 @@ export default function App(): JSX.Element {
   );
 }
 // Todo: 1. terra 2. daily report
-// Todo: eslint fix
 // Todo: codecept
-// Tpdo: as Mock 테스트 수정
 // watchman

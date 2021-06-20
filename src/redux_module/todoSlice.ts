@@ -2,16 +2,19 @@
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+type Task = {
+  title: string
+  subTasks: number[]
+};
+
+type Tasks = {
+  [id: number]: Task
+};
+
 type TodoState = {
   currentTaskId: number
   nextTaskId: number
-  tasks: {
-    [id: number]: { title: string, subTasks: number[] }
-  }
-};
-
-type TaskWithTitle = {
-  title: string
+  tasks: Tasks
 };
 
 const initialState: TodoState = {
@@ -28,14 +31,16 @@ const { actions, reducer } = createSlice({
   initialState,
 
   reducers: {
-    addTask: (state, action: PayloadAction<TaskWithTitle>) => {
-      if (action.payload.title === '') {
+    addTask: (state, action: PayloadAction<string>) => {
+      if (action.payload === '') {
         return;
       }
 
       const { currentTaskId, nextTaskId } = state;
 
-      state.tasks[nextTaskId] = { ...action.payload, subTasks: [] };
+      const newTask: Task = { title: action.payload, subTasks: [] };
+
+      state.tasks[nextTaskId] = newTask;
 
       state.tasks[currentTaskId].subTasks.push(nextTaskId);
 

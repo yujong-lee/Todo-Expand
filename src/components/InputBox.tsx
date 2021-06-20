@@ -14,7 +14,7 @@ const InputBox = ({ initialTitle }: InputBoxProps): JSX.Element => {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => setTaskTitle(e.target.value);
   const handleClick = () => {
-    dispatch(addTask({ title: taskTitle }));
+    dispatch(addTask(taskTitle));
     setTaskTitle('');
   };
 
