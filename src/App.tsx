@@ -42,8 +42,3 @@ export default function App({ initialTaskId }: AppProps): JSX.Element {
     </>
   );
 }
-// Todo: 1. terra 2. daily report
-// Todo: codecept
-// watchman
-// 바벨, 웹팩 콘피그 오류
-// useSelector 등 mock제대로? useSelctro mockimple 자동완성
