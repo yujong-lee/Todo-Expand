@@ -1,5 +1,5 @@
 import reducer,
-{ addTask, deleteTask } from './todoSlice';
+{ addTask, deleteTask, updateCurrentTaskId } from './todoSlice';
 
 describe('todoSlice', () => {
   context('when title is not empty string', () => {
@@ -65,6 +65,30 @@ describe('todoSlice', () => {
     expect(reducer(
       oldState,
       deleteTask(1),
+    )).toEqual(newState);
+  });
+
+  it('updates current task id', () => {
+    const oldState = {
+      currentTaskId: 0,
+      nextTaskId: 2,
+      tasks: {
+        0: { title: 'root', subTasks: [1] },
+        1: { title: '첫번째 할일', subTasks: [] },
+      },
+    };
+    const newState = {
+      currentTaskId: 1,
+      nextTaskId: 2,
+      tasks: {
+        0: { title: 'root', subTasks: [1] },
+        1: { title: '첫번째 할일', subTasks: [] },
+      },
+    };
+
+    expect(reducer(
+      oldState,
+      updateCurrentTaskId(1),
     )).toEqual(newState);
   });
 });
