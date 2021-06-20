@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import { render } from '@testing-library/react';
 import { useSelector } from 'react-redux';
 
@@ -7,7 +11,7 @@ jest.mock('react-redux');
 
 describe('App', () => {
   it('renders header', () => {
-    useSelector.mockImplementation((selector) => selector({
+    (useSelector as jest.Mock).mockImplementation((selector) => selector({
       todo: {
         tasks: {
           0: { title: 'root', subTasks: [] },

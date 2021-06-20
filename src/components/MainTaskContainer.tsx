@@ -1,14 +1,21 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../redux_module/hook';
 
 import { deleteTask, updateCurrentTaskId } from '../redux_module/todoSlice';
-
 import MainTask from './MainTask';
 
-export default function MainTaskContainer({ id, isSubTasksOpen, setIsSubTasksOpen }) {
-  const dispatch = useDispatch();
+type MainTaskContainerProps = {
+  id: string,
+  isSubTasksOpen: boolean,
+  setIsSubTasksOpen: Function
+}
 
-  const { title, subTasks } = useSelector((state) => state.todo.tasks[id]);
-  const currentTaskId = useSelector((state) => state.todo.currentTaskId);
+const MainTaskContainer = (
+  { id, isSubTasksOpen, setIsSubTasksOpen } : MainTaskContainerProps
+  ): JSX.Element => {
+  const dispatch = useAppDispatch();
+
+  const { title, subTasks } = useAppSelector(state => state.todo.tasks[id])
+  const currentTaskId = useAppSelector(state => state.todo.currentTaskId);
 
   const isSubTasksEmpty = (subTasks.length === 0);
   const isRootTask = (id === '0');
@@ -33,3 +40,5 @@ export default function MainTaskContainer({ id, isSubTasksOpen, setIsSubTasksOpe
     />
   );
 }
+
+export default MainTaskContainer

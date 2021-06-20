@@ -50,6 +50,7 @@ describe('todoSlice', () => {
   it('deletes task from tasks and reset currentTaskId', () => {
     const oldState = {
       currentTaskId: '1',
+      nextTaskId: '2',
       tasks: {
         0: { title: 'root', subTasks: ['1'] },
         1: { title: '첫번째 할일', subTasks: [] },
@@ -57,6 +58,7 @@ describe('todoSlice', () => {
     };
     const newState = {
       currentTaskId: '0',
+      nextTaskId: '2',
       tasks: { 0: { title: 'root', subTasks: [] } },
     };
 

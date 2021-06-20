@@ -1,14 +1,15 @@
-import { useState } from 'react';
+import { ChangeEvent } from 'react';
+import { MouseEventHandler, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { addTask } from '../redux_module/todoSlice';
 
-export default function InputBox() {
+const InputBox = (): JSX.Element => {
   const dispatch = useDispatch();
 
   const [taskTitle, setTaskTitle] = useState('');
 
-  const handleChange = (e) => setTaskTitle(e.target.value);
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => setTaskTitle(e.target.value);
   const handleClick = () => {
     dispatch(addTask({ title: taskTitle }));
     setTaskTitle('');
@@ -36,3 +37,5 @@ export default function InputBox() {
     </>
   );
 }
+
+export default InputBox

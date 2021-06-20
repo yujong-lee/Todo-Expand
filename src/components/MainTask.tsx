@@ -1,12 +1,25 @@
 import TaskTitle from './TaskTitle';
 import CompleteButton from './CompleteButton';
 import SubTasksToggle from './SubTasksToggle';
+import { MouseEventHandler } from 'react';
 
-export default function MainTask({
+type MainTaskProps = {
+  id: string,
+  title: string,
+  isSelected: boolean,
+  isRootTask: boolean,
+  isSubTasksEmpty: boolean,
+  isSubTasksOpen: boolean,
+  handleClickTitle: MouseEventHandler<HTMLButtonElement>
+  handleClickComplete: MouseEventHandler<HTMLButtonElement>
+  handleClickDetail: MouseEventHandler<HTMLButtonElement>
+}
+
+const MainTask = ({
   id, title,
   isSelected, isRootTask, isSubTasksEmpty, isSubTasksOpen,
   handleClickTitle, handleClickComplete, handleClickDetail,
-}) {
+}: MainTaskProps): JSX.Element => {
   return (
     <>
       {isRootTask
@@ -22,15 +35,13 @@ export default function MainTask({
             {isSubTasksEmpty
               ? (
                 <CompleteButton
-                  id={id}
-                  handleClick={handleClickComplete}
-                />
+                id={id}
+                handleClick={handleClickComplete}/>
               )
               : (
                 <SubTasksToggle
                   taskId={id}
                   isOpen={isSubTasksOpen}
-                  isEmpty={isSubTasksEmpty}
                   onClick={handleClickDetail}
                 />
               )}
@@ -39,3 +50,6 @@ export default function MainTask({
     </>
   );
 }
+
+
+export default MainTask

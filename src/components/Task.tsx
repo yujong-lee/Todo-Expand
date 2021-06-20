@@ -1,12 +1,17 @@
 /* eslint-disable import/no-cycle */
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../redux_module/hook';
 
 import MainTaskContainer from './MainTaskContainer';
 import SubTasks from './SubTasks';
 
-export default function Task({ id, isOpen = true }) {
-  const { subTasks } = useSelector((state) => state.todo.tasks[id]);
+type TaskProps = {
+  id: string
+  isOpen?: boolean
+}
+
+const Task = ({ id, isOpen = true }: TaskProps): JSX.Element => {
+  const { subTasks } = useAppSelector(state => state.todo.tasks[id]);
 
   const [isSubTasksOpen, setIsSubTasksOpen] = useState(isOpen);
 
@@ -24,3 +29,4 @@ export default function Task({ id, isOpen = true }) {
     </>
   );
 }
+export default Task

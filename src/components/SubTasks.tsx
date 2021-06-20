@@ -1,12 +1,7 @@
 /* eslint-disable import/no-cycle */
 import Task from './Task';
 
-interface TaskItem {
-  title: string
-  subTask: string[]
-}
-
-export default function SubTasks({ subTasks }): JSX.Element {
+const SubTasks = ({ subTasks }: {subTasks: string[]}): JSX.Element => {
   return (
     <ul>
       {subTasks.map((subTaskId) => (
@@ -17,3 +12,5 @@ export default function SubTasks({ subTasks }): JSX.Element {
     </ul>
   );
 }
+
+export default SubTasks

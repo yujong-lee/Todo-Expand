@@ -1,4 +1,9 @@
-import { fireEvent, render } from '@testing-library/react';
+/**
+ * @jest-environment jsdom
+ */
+
+import { render, RenderResult, fireEvent } from '@testing-library/react';
+
 import CompleteButton from './CompleteButton';
 
 describe('CompleteButton', () => {
@@ -8,7 +13,7 @@ describe('CompleteButton', () => {
     handleClick.mockClear();
   });
 
-  function renderCompleteButton() {
+  const renderCompleteButton = (): RenderResult => {
     return (
       render((
         <CompleteButton

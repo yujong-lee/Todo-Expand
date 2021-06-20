@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from './redux_module/hook';
 import styled from '@emotion/styled';
 
 import InputBox from './components/InputBox';
@@ -9,13 +9,17 @@ import { updateCurrentTaskId } from './redux_module/todoSlice';
 import { original, highlight } from './fixture/color';
 
 export default function App() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const handleClick = () => dispatch(updateCurrentTaskId('0'));
 
-  const currentTaskId = useSelector((state) => state.todo.currentTaskId);
+  const currentTaskId = useAppSelector((state) => state.todo.currentTaskId);
   const isSelected = (currentTaskId === '0');
 
-  const H1 = styled.h1`
+  type H1Props = {
+    isSelected: boolean
+  }
+
+  const H1 = styled.h1<H1Props>`
   background-color: ${(props) => ((props.isSelected) ? highlight : original)};
 `;
 
@@ -34,3 +38,4 @@ export default function App() {
     </>
   );
 }
+//Todo: 1. terra 2. daily report

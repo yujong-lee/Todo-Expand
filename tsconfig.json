@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-      "jsx": "react",
+      "jsx": "react-jsx",
       "lib": ["es6", "dom"],
       "rootDir": "src",
       "module": "commonjs",
@@ -10,13 +10,15 @@
       "noImplicitReturns": true,
       "noImplicitThis": true,
       "noImplicitAny": true,
-      "strictNullChecks": true
+      "strictNullChecks": true,
+      "allowSyntheticDefaultImports": true,
+      "esModuleInterop": true,
     },
     "include": [
       "./src"
     ],
     "exclude": [
       "node_modules",
-      "build"
+      "build",
     ]
   }

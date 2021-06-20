@@ -1,18 +1,32 @@
-import { render } from '@testing-library/react';
-import given from 'given2';
+/**
+ * @jest-environment jsdom
+ */
+
+import { render, RenderResult } from '@testing-library/react';
+import { MouseEventHandler } from 'react';
+import given from 'given2'
 
 import TaskTitle from './TaskTitle';
 import { highlight, original } from '../fixture/color';
 
 describe('TaskTitle', () => {
-  it('renders button with title', () => {
-    const handleClick = jest.fn();
+  const handleClick = jest.fn() as jest.MockedFunction<MouseEventHandler<HTMLButtonElement>>;
 
-    const { getByRole } = render(<TaskTitle
+  const renderTaskTitle = (): RenderResult => {
+    return render(
+      <TaskTitle
       title="taskTitle"
       isSelected={given.isSelected}
-      onClick={handleClick}
-    />);
+      handleClick={handleClick}
+    />)
+  }
+
+  beforeEach(() => {
+    handleClick.mockClear()
+  })
+
+  it('renders button with title', () => {
+    const { getByRole } = renderTaskTitle();
 
     expect(getByRole('button', { name: 'taskTitle' })).toBeInTheDocument();
   });
@@ -21,13 +35,7 @@ describe('TaskTitle', () => {
     given('isSelected', () => true);
 
     it('renders button with highlight color', () => {
-      const handleClick = jest.fn();
-
-      const { getByRole } = render(<TaskTitle
-        title="taskTitle"
-        isSelected={given.isSelected}
-        onClick={handleClick}
-      />);
+      const { getByRole } = renderTaskTitle()
 
       expect(getByRole('button', { name: 'taskTitle' })).toHaveStyle(`
         background-color: ${highlight};
@@ -39,13 +47,7 @@ describe('TaskTitle', () => {
     given('isSelected', () => false);
 
     it('renders button with original color', () => {
-      const handleClick = jest.fn();
-
-      const { getByRole } = render(<TaskTitle
-        title="taskTitle"
-        isSelected={given.isSelected}
-        onClick={handleClick}
-      />);
+      const { getByRole } = renderTaskTitle()
 
       expect(getByRole('button', { name: 'taskTitle' })).toHaveStyle(`
         background-color: ${original};

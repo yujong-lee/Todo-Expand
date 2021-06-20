@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import { fireEvent, render } from '@testing-library/react';
 import { useDispatch } from 'react-redux';
 
@@ -19,7 +23,7 @@ describe('InputBox', () => {
 
   it('adds tasks with button', () => {
     const dispatch = jest.fn();
-    useDispatch.mockReturnValue(dispatch);
+    (useDispatch as jest.Mock).mockReturnValue(dispatch);
 
     const { getByRole } = render(<InputBox />);
 

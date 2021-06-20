@@ -1,16 +1,19 @@
-import { fireEvent, render } from '@testing-library/react';
+/**
+ * @jest-environment jsdom
+ */
+
+import { fireEvent, render, RenderResult } from '@testing-library/react';
 import { useDispatch, useSelector } from 'react-redux';
-import given from 'given2';
+import given from 'given2'
 
 import Task from './Task';
 import { deleteTask, updateCurrentTaskId } from '../redux_module/todoSlice';
 
-jest.mock('react-redux');
 
 describe('Task', () => {
   const dispatch = jest.fn();
 
-  function renderTask({ id }) {
+  const renderTask = ({ id }: {id: string}): RenderResult => {
     return render(
       <Task
         id={id}
@@ -21,9 +24,9 @@ describe('Task', () => {
 
   beforeEach(() => {
     dispatch.mockClear();
-    useDispatch.mockReturnValue(dispatch);
+    (useDispatch as jest.Mock).mockReturnValue(dispatch);
 
-    useSelector.mockImplementation((selector) => selector({
+    (useSelector as jest.Mock).mockImplementation((selector) => selector({
       todo: { tasks: given.tasks },
     }));
   });

@@ -8,8 +8,13 @@ module.exports = {
     'plugin:testing-library/react',
     'plugin:jest-dom/recommended',
     'plugin:react/recommended',
-    'airbnb',
+    'airbnb-typescript',
   ],
+  globals: {
+    context: 'readonly',
+    given: 'readonly',
+  },
+  parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
@@ -19,16 +24,8 @@ module.exports = {
   },
   plugins: [
     'react',
+    '@typescript-eslint',
   ],
-  globals: {
-    Atomics: 'readonly',
-    SharedArrayBuffer: 'readonly',
-    actor: 'readonly',
-    Feature: 'readonly',
-    Scenario: 'readonly',
-    context: 'readonly',
-    given: 'readonly',
-  },
   rules: {
     indent: ['error', 2],
     'no-trailing-spaces': 'error',
@@ -68,5 +65,7 @@ module.exports = {
         tsx: 'never',
       },
     ],
+
   },
+  'react/jsx-filename-extension': [1, { extensions: ['.tsx', '.ts'] }],
 };

@@ -1,20 +1,36 @@
 /* eslint-disable no-param-reassign */
 
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { RootState } from './store';
+
+type TodoState = {
+  currentTaskId: string
+  nextTaskId: string
+  tasks: {
+    [id: string]: {title: string, subTasks: string[]}
+  }
+}
+
+type TaskWithTitle = {
+  title: string
+}
+
+const initialState: TodoState = {
+  currentTaskId: '0',
+  nextTaskId: '1',
+  tasks: {
+    0: { title: 'root', subTasks: [] },
+  },
+}
+
 
 const { actions, reducer } = createSlice({
   name: 'todo',
 
-  initialState: {
-    currentTaskId: '0',
-    nextTaskId: '1',
-    tasks: {
-      0: { title: 'root', subTasks: [] },
-    },
-  },
+  initialState,
 
   reducers: {
-    addTask: (state, action) => {
+    addTask: (state, action: PayloadAction<TaskWithTitle>) => {
       if (action.payload.title === '') {
         return;
       }
@@ -28,7 +44,7 @@ const { actions, reducer } = createSlice({
       state.nextTaskId = (Number.parseInt(nextTaskId, 10) + 1).toString(10);
     },
 
-    deleteTask: (state, action) => {
+    deleteTask: (state, action:  PayloadAction<string>) => {
       const { payload: idToDelete } = action;
 
       state.currentTaskId = '0';
@@ -45,7 +61,7 @@ const { actions, reducer } = createSlice({
       );
     },
 
-    updateCurrentTaskId: (state, action) => {
+    updateCurrentTaskId: (state, action: PayloadAction<string>) => {
       state.currentTaskId = action.payload;
     },
   },

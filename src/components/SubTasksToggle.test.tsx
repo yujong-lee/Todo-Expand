@@ -1,12 +1,16 @@
-import { fireEvent, render } from '@testing-library/react';
-import given from 'given2';
+/**
+ * @jest-environment jsdom
+ */
+
+import { render, RenderResult, fireEvent } from '@testing-library/react';
+import given from 'given2'
 
 import SubTasksToggle from './SubTasksToggle';
 
 describe('SubTasksToggle', () => {
   const handleClick = jest.fn();
 
-  function renderSubTasksToggle() {
+  const renderSubTasksToggle = (): RenderResult => {
     return (
       render((
         <SubTasksToggle
