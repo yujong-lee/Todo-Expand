@@ -1,7 +1,7 @@
 import {  MouseEventHandler } from "react";
 
 type SubTasksToggleType = {
-  taskId: string
+  taskId: number
   isOpen: boolean
   onClick: MouseEventHandler<HTMLButtonElement>
 }

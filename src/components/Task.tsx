@@ -6,7 +6,7 @@ import MainTaskContainer from './MainTaskContainer';
 import SubTasks from './SubTasks';
 
 type TaskProps = {
-  id: string
+  id: number
   isOpen?: boolean
 }
 

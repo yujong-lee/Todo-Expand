@@ -18,6 +18,6 @@ describe('SubTasks', () => {
       },
     }));
 
-    render(<SubTasks subTasks={['1', '2']} />);
+    render(<SubTasks subTasks={[1, 2]} />);
   });
 });

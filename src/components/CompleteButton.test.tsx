@@ -17,7 +17,7 @@ describe('CompleteButton', () => {
     return (
       render((
         <CompleteButton
-          id="1"
+          id={1}
           handleClick={handleClick}
         />
       ))

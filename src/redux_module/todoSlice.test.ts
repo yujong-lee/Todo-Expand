@@ -5,19 +5,19 @@ describe('todoSlice', () => {
   context('when title is not empty string', () => {
     it('adds new task to todoList and updates nextTaskId', () => {
       const oldState = {
-        currentTaskId: '1',
-        nextTaskId: '2',
+        currentTaskId: 1,
+        nextTaskId: 2,
         tasks: {
-          0: { title: 'root', subTasks: ['1'] },
+          0: { title: 'root', subTasks: [1] },
           1: { title: 'task1', subTasks: [] },
         },
       };
       const newState = {
-        currentTaskId: '1',
-        nextTaskId: '3',
+        currentTaskId: 1,
+        nextTaskId: 3,
         tasks: {
-          0: { title: 'root', subTasks: ['1'] },
-          1: { title: 'task1', subTasks: ['2'] },
+          0: { title: 'root', subTasks: [1] },
+          1: { title: 'task1', subTasks: [2] },
           2: { title: 'task2', subTasks: [] },
         },
       };
@@ -32,10 +32,10 @@ describe('todoSlice', () => {
   context('when title is empty string', () => {
     it('does nothing', () => {
       const oldState = {
-        currentTaskId: '1',
-        nextTaskId: '2',
+        currentTaskId: 1,
+        nextTaskId: 2,
         tasks: {
-          0: { title: 'root', subTasks: ['1'] },
+          0: { title: 'root', subTasks: [1] },
           1: { title: 'task1', subTasks: [] },
         },
       };
@@ -49,22 +49,22 @@ describe('todoSlice', () => {
 
   it('deletes task from tasks and reset currentTaskId', () => {
     const oldState = {
-      currentTaskId: '1',
-      nextTaskId: '2',
+      currentTaskId: 1,
+      nextTaskId: 2,
       tasks: {
-        0: { title: 'root', subTasks: ['1'] },
+        0: { title: 'root', subTasks: [1] },
         1: { title: '첫번째 할일', subTasks: [] },
       },
     };
     const newState = {
-      currentTaskId: '0',
-      nextTaskId: '2',
+      currentTaskId: 0,
+      nextTaskId: 2,
       tasks: { 0: { title: 'root', subTasks: [] } },
     };
 
     expect(reducer(
       oldState,
-      deleteTask('1'),
+      deleteTask(1),
     )).toEqual(newState);
   });
 });

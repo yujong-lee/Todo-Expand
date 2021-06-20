@@ -4,7 +4,7 @@ import { deleteTask, updateCurrentTaskId } from '../redux_module/todoSlice';
 import MainTask from './MainTask';
 
 type MainTaskContainerProps = {
-  id: string,
+  id: number,
   isSubTasksOpen: boolean,
   setIsSubTasksOpen: Function
 }
@@ -18,7 +18,7 @@ const MainTaskContainer = (
   const currentTaskId = useAppSelector(state => state.todo.currentTaskId);
 
   const isSubTasksEmpty = (subTasks.length === 0);
-  const isRootTask = (id === '0');
+  const isRootTask = (id === 0);
   const isSelected = (currentTaskId === id);
 
   const handleClickTitle = () => dispatch(updateCurrentTaskId(id));

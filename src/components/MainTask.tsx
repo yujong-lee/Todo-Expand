@@ -4,7 +4,7 @@ import SubTasksToggle from './SubTasksToggle';
 import { MouseEventHandler } from 'react';
 
 type MainTaskProps = {
-  id: string,
+  id: number,
   title: string,
   isSelected: boolean,
   isRootTask: boolean,

@@ -1,7 +1,7 @@
 /* eslint-disable import/no-cycle */
 import Task from './Task';
 
-const SubTasks = ({ subTasks }: {subTasks: string[]}): JSX.Element => {
+const SubTasks = ({ subTasks }: {subTasks: number[]}): JSX.Element => {
   return (
     <ul>
       {subTasks.map((subTaskId) => (

@@ -1,7 +1,7 @@
 import { MouseEventHandler } from 'react';
 
 type CompleteButtonType = {
-  id: string
+  id: number
   handleClick: MouseEventHandler<HTMLButtonElement>
 }
 

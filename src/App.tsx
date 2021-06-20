@@ -10,10 +10,10 @@ import { original, highlight } from './fixture/color';
 
 export default function App() {
   const dispatch = useAppDispatch();
-  const handleClick = () => dispatch(updateCurrentTaskId('0'));
+  const handleClick = () => dispatch(updateCurrentTaskId(0));
 
   const currentTaskId = useAppSelector((state) => state.todo.currentTaskId);
-  const isSelected = (currentTaskId === '0');
+  const isSelected = (currentTaskId === 0);
 
   type H1Props = {
     isSelected: boolean
@@ -34,7 +34,7 @@ export default function App() {
 
       <InputBox />
       <br />
-      <Task id="0" />
+      <Task id={0} />
     </>
   );
 }

@@ -13,7 +13,7 @@ import { deleteTask, updateCurrentTaskId } from '../redux_module/todoSlice';
 describe('Task', () => {
   const dispatch = jest.fn();
 
-  const renderTask = ({ id }: {id: string}): RenderResult => {
+  const renderTask = ({ id }: {id: number}): RenderResult => {
     return render(
       <Task
         id={id}
@@ -37,17 +37,17 @@ describe('Task', () => {
     }));
 
     it('is rendered', () => {
-      const { container } = renderTask({ id: '1' });
+      const { container } = renderTask({ id: 1 });
 
       expect(container).toHaveTextContent('task1');
     });
 
     context('when title is cilcked', () => {
       it('updates currentTaskId', () => {
-        const { getByText } = renderTask({ id: '1' });
+        const { getByText } = renderTask({ id: 1 });
         fireEvent.click(getByText('task1'));
 
-        expect(dispatch).toBeCalledWith(updateCurrentTaskId('1'));
+        expect(dispatch).toBeCalledWith(updateCurrentTaskId(1));
       });
     });
   });
@@ -58,7 +58,7 @@ describe('Task', () => {
     }));
 
     it('is not rendered', () => {
-      const { queryByText } = renderTask({ id: '0' });
+      const { queryByText } = renderTask({ id: 0 });
 
       expect(queryByText('root')).not.toBeInTheDocument();
     });
@@ -67,12 +67,12 @@ describe('Task', () => {
   context('when subTasks is opened', () => {
     given('isOpen', () => true);
     given('tasks', () => ({
-      1: { title: 'task1', subTasks: ['2'] },
+      1: { title: 'task1', subTasks: [2] },
       2: { title: 'task2', subTasks: [] },
     }));
 
     it('renders subTask title', () => {
-      const { container } = renderTask({ id: '1' });
+      const { container } = renderTask({ id: 1 });
 
       expect(container).toHaveTextContent('task1');
       expect(container).toHaveTextContent('task2');
@@ -82,12 +82,12 @@ describe('Task', () => {
   context('when subTasks is not opened', () => {
     given('isOpen', () => false);
     given('tasks', () => ({
-      1: { title: 'task1', subTasks: ['2'] },
+      1: { title: 'task1', subTasks: [2] },
       2: { title: 'task2', subTasks: [] },
     }));
 
     it("doesn't renders subTask title", () => {
-      const { container } = renderTask({ id: '1' });
+      const { container } = renderTask({ id: 1 });
 
       expect(container).toHaveTextContent('task1');
       expect(container).not.toHaveTextContent('task2');
@@ -100,24 +100,24 @@ describe('Task', () => {
     }));
 
     it('renders "완료" button', () => {
-      const { getByRole } = renderTask({ id: '1' });
+      const { getByRole } = renderTask({ id: 1 });
 
       fireEvent.click(getByRole('button', { name: '완료' }));
 
-      expect(dispatch).toBeCalledWith(deleteTask('1'));
+      expect(dispatch).toBeCalledWith(deleteTask(1));
     });
   });
 
   context('when subTasks is not empty', () => {
     given('tasks', () => ({
-      1: { title: 'task1', subTasks: ['2'] },
+      1: { title: 'task1', subTasks: [2] },
       2: { title: 'task2', subTasks: [] },
     }));
 
     it('renders "펼치기" button to unfold subTasks', () => {
       given('isOpen', () => false);
 
-      const { container, getByRole } = renderTask({ id: '1' });
+      const { container, getByRole } = renderTask({ id: 1 });
 
       expect(container).toHaveTextContent('task1');
       expect(container).not.toHaveTextContent('task2');
@@ -131,7 +131,7 @@ describe('Task', () => {
     it('renders "접기" button to fold subTasks', () => {
       given('isOpen', () => true);
 
-      const { container, getByRole } = renderTask({ id: '1' });
+      const { container, getByRole } = renderTask({ id: 1 });
 
       expect(container).toHaveTextContent('task1');
       expect(container).toHaveTextContent('task2');
