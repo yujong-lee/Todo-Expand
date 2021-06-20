@@ -3,10 +3,10 @@
 import styled from '@emotion/styled';
 import { useAppDispatch, useAppSelector } from './redux_module/hook';
 
-import InputBox from './components/InputBox';
-import Task from './components/Task';
 import { updateCurrentTaskId } from './redux_module/todoSlice';
 import { original, highlight } from './fixture/color';
+import Input from './components/Input';
+import Task from './components/Task';
 
 export default function App(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -32,7 +32,7 @@ export default function App(): JSX.Element {
         Todo-expand
       </H1>
 
-      <InputBox />
+      <Input />
       <br />
       <Task id={0} />
     </>
@@ -41,3 +41,5 @@ export default function App(): JSX.Element {
 // Todo: 1. terra 2. daily report
 // Todo: codecept
 // watchman
+// 바벨, 웹팩 콘피그 오류
+// useSelector 등 mock제대로? useSelctro mockimple 자동완성
