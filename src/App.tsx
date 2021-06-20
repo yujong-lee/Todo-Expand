@@ -8,12 +8,16 @@ import { original, highlight } from './fixture/color';
 import Input from './components/Input';
 import Task from './components/Task';
 
-export default function App(): JSX.Element {
+type AppProps = {
+  initialTaskId?: number
+};
+
+export default function App({ initialTaskId }: AppProps): JSX.Element {
   const dispatch = useAppDispatch();
   const handleClick = () => dispatch(updateCurrentTaskId(0));
 
   const currentTaskId = useAppSelector((state) => state.todo.currentTaskId);
-  const isSelected = (currentTaskId === 0);
+  const isSelected = ((initialTaskId || currentTaskId) === 0);
 
   type H1Props = {
     isSelected: boolean
