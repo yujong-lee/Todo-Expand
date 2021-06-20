@@ -1,6 +1,17 @@
 /* eslint-disable no-param-reassign */
 
+import * as R from 'ramda';
+
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
+const stringToDecimal = (target: string): number => parseInt(target, 10);
+
+const keysAsNumberFrom = (
+  obj: Record<string, unknown>,
+): number[] => R.map<string, number>(
+  stringToDecimal,
+  Object.keys(obj),
+);
 
 type Task = {
   title: string
@@ -27,18 +38,19 @@ const initialState: TodoState = {
 
 const { actions, reducer } = createSlice({
   name: 'todo',
-
   initialState,
 
   reducers: {
     addTask: (state, action: PayloadAction<string>) => {
-      if (action.payload === '') {
+      const { payload: newTaskTitle } = action;
+
+      if (newTaskTitle === '') {
         return;
       }
 
-      const { currentTaskId, nextTaskId } = state;
+      const newTask: Task = { title: newTaskTitle, subTasks: [] };
 
-      const newTask: Task = { title: action.payload, subTasks: [] };
+      const { currentTaskId, nextTaskId } = state;
 
       state.tasks[nextTaskId] = newTask;
 
@@ -52,15 +64,16 @@ const { actions, reducer } = createSlice({
 
       state.currentTaskId = 0;
 
-      delete state.tasks[idToDelete];
+      state.tasks = R.omit([String(idToDelete)], state.tasks);
 
-      const ids: number[] = Object.keys(state.tasks).map((id) => parseInt(id, 10));
+      const taskIds: number[] = keysAsNumberFrom(state.tasks);
 
-      ids.forEach((id) => {
-        const arr = state.tasks[id].subTasks;
-        state.tasks[id].subTasks = arr.filter(
-          (subTaskId) => subTaskId !== idToDelete,
-        );
+      taskIds.forEach((id) => {
+        const { subTasks } = state.tasks[id];
+
+        const newSubTasks = R.reject(R.equals(idToDelete), subTasks);
+
+        state.tasks[id].subTasks = newSubTasks;
       });
     },
 
