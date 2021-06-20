@@ -4,23 +4,20 @@
 
 import { useDispatch, useSelector } from 'react-redux';
 import { fireEvent, render, RenderResult } from '@testing-library/react';
-import given from 'given2'
+import given from 'given2';
 
 import { deleteTask, updateCurrentTaskId } from '../redux_module/todoSlice';
 import Task from './Task';
 
-
 describe('Task', () => {
   const dispatch = jest.fn();
 
-  const renderTask = (id: number): RenderResult => {
-    return render(
-      <Task
-        id={id}
-        isOpen={given.isOpen}
-      />,
-    );
-  }
+  const renderTask = (id: number): RenderResult => render((
+    <Task
+      id={id}
+      isOpen={given.isOpen}
+    />
+  ));
 
   beforeEach(() => {
     dispatch.mockClear();

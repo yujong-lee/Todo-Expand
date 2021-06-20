@@ -1,7 +1,8 @@
+import { MouseEventHandler } from 'react';
+
 import TaskTitle from './TaskTitle';
 import CompleteButton from './CompleteButton';
 import SubTasksToggle from './SubTasksToggle';
-import { MouseEventHandler } from 'react';
 
 type MainTaskProps = {
   id: number,
@@ -13,43 +14,41 @@ type MainTaskProps = {
   handleClickTitle: MouseEventHandler<HTMLButtonElement>
   handleClickComplete: MouseEventHandler<HTMLButtonElement>
   handleClickDetail: MouseEventHandler<HTMLButtonElement>
-}
+};
 
 const MainTask = ({
   id, title,
   isSelected, isRootTask, isSubTasksEmpty, isSubTasksOpen,
   handleClickTitle, handleClickComplete, handleClickDetail,
-}: MainTaskProps): JSX.Element => {
-  return (
-    <>
-      {isRootTask
-        ? null
-        : (
-          <>
-            <TaskTitle
-              title={title}
-              isSelected={isSelected}
-              handleClick={handleClickTitle}
-            />
+}: MainTaskProps): JSX.Element => (
+  <>
+    {isRootTask
+      ? null
+      : (
+        <>
+          <TaskTitle
+            title={title}
+            isSelected={isSelected}
+            handleClick={handleClickTitle}
+          />
 
-            {isSubTasksEmpty
-              ? (
-                <CompleteButton
+          {isSubTasksEmpty
+            ? (
+              <CompleteButton
                 id={id}
-                handleClick={handleClickComplete}/>
-              )
-              : (
-                <SubTasksToggle
-                  taskId={id}
-                  isOpen={isSubTasksOpen}
-                  onClick={handleClickDetail}
-                />
-              )}
-          </>
-        )}
-    </>
-  );
-}
+                handleClick={handleClickComplete}
+              />
+            )
+            : (
+              <SubTasksToggle
+                taskId={id}
+                isOpen={isSubTasksOpen}
+                onClick={handleClickDetail}
+              />
+            )}
+        </>
+      )}
+  </>
+);
 
-
-export default MainTask
+export default MainTask;

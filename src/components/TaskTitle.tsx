@@ -7,13 +7,12 @@ type TaskTitleProps = {
   title: string
   isSelected: boolean
   handleClick: MouseEventHandler<HTMLButtonElement>
-}
+};
 
-const TaskTitle = ({ title, isSelected, handleClick }: TaskTitleProps): JSX.Element =>  {
-
+const TaskTitle = ({ title, isSelected, handleClick }: TaskTitleProps): JSX.Element => {
   type ButtonProps = {
     isSelected: boolean
-  }
+  };
 
   const Button = styled.button<ButtonProps>`
     background-color: ${(props) => ((props.isSelected) ? highlight : original)};
@@ -34,6 +33,6 @@ const TaskTitle = ({ title, isSelected, handleClick }: TaskTitleProps): JSX.Elem
       {title}
     </Button>
   );
-}
+};
 
-export default TaskTitle
+export default TaskTitle;

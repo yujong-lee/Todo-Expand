@@ -3,24 +3,22 @@
  */
 
 import { render, RenderResult, fireEvent } from '@testing-library/react';
-import given from 'given2'
+import given from 'given2';
 
 import SubTasksToggle from './SubTasksToggle';
 
 describe('SubTasksToggle', () => {
   const handleClick = jest.fn();
 
-  const renderSubTasksToggle = (): RenderResult => {
-    return (
-      render((
-        <SubTasksToggle
-          taskId={1}
-          isOpen={given.isOpen}
-          onClick={handleClick}
-        />
-      ))
-    );
-  }
+  const renderSubTasksToggle = (): RenderResult => (
+    render((
+      <SubTasksToggle
+        taskId={1}
+        isOpen={given.isOpen}
+        onClick={handleClick}
+      />
+    ))
+  );
 
   beforeEach(() => {
     handleClick.mockClear();
@@ -41,6 +39,7 @@ describe('SubTasksToggle', () => {
 
   context('when subTasks is opened', () => {
     given('isOpen', () => true);
+
     it('renders "접기" button', () => {
       const { getByRole } = renderSubTasksToggle();
 
@@ -50,6 +49,7 @@ describe('SubTasksToggle', () => {
 
   context('when subTasks is closed', () => {
     given('isOpen', () => false);
+
     it('renders "펼치기" button', () => {
       const { getByRole } = renderSubTasksToggle();
 

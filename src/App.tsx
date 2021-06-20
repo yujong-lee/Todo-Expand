@@ -1,14 +1,14 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { useAppDispatch, useAppSelector } from './redux_module/hook';
 import styled from '@emotion/styled';
+import { useAppDispatch, useAppSelector } from './redux_module/hook';
 
 import InputBox from './components/InputBox';
 import Task from './components/Task';
 import { updateCurrentTaskId } from './redux_module/todoSlice';
 import { original, highlight } from './fixture/color';
 
-export default function App() {
+export default function App(): JSX.Element {
   const dispatch = useAppDispatch();
   const handleClick = () => dispatch(updateCurrentTaskId(0));
 
@@ -17,7 +17,7 @@ export default function App() {
 
   type H1Props = {
     isSelected: boolean
-  }
+  };
 
   const H1 = styled.h1<H1Props>`
   background-color: ${(props) => ((props.isSelected) ? highlight : original)};
@@ -38,4 +38,8 @@ export default function App() {
     </>
   );
 }
-//Todo: 1. terra 2. daily report
+// Todo: 1. terra 2. daily report
+// Todo: eslint fix
+// Todo: codecept
+// Tpdo: as Mock 테스트 수정
+// watchman

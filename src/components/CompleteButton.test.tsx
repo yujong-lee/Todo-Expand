@@ -13,16 +13,20 @@ describe('CompleteButton', () => {
     handleClick.mockClear();
   });
 
-  const renderCompleteButton = (): RenderResult => {
-    return (
-      render((
-        <CompleteButton
-          id={1}
-          handleClick={handleClick}
-        />
-      ))
-    );
-  }
+  const renderCompleteButton = (): RenderResult => (
+    render((
+      <CompleteButton
+        id={1}
+        handleClick={handleClick}
+      />
+    ))
+  );
+
+  it('renders button with test id', () => {
+    const { getByTestId } = renderCompleteButton();
+
+    expect(getByTestId('button-1')).toBeInTheDocument();
+  });
 
   it('renders "완료" button', () => {
     const { getByRole } = renderCompleteButton();
@@ -30,16 +34,11 @@ describe('CompleteButton', () => {
     expect(getByRole('button', { name: '완료' })).toBeInTheDocument();
   });
 
-  it('button with test id', () => {
-    const { getByTestId } = renderCompleteButton();
-
-    expect(getByTestId('button-1')).toBeInTheDocument();
-  });
-
-  it('renders button listening click event', () => {
+  it('listens to click event', () => {
     const { getByRole } = renderCompleteButton();
 
     fireEvent.click(getByRole('button', { name: '완료' }));
+
     expect(handleClick).toBeCalled();
   });
 });

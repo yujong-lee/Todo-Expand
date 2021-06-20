@@ -2,13 +2,13 @@
  * @jest-environment jsdom
  */
 
-import { render } from '@testing-library/react';
 import { useSelector } from 'react-redux';
+import { render } from '@testing-library/react';
 
 import SubTasks from './SubTasks';
 
 describe('SubTasks', () => {
-  it('renders', () => {
+  beforeEach(() => {
     (useSelector as jest.Mock).mockImplementation((selector) => selector({
       todo: {
         tasks: {
@@ -17,7 +17,9 @@ describe('SubTasks', () => {
         },
       },
     }));
+  });
 
+  it('renders', () => {
     render(<SubTasks subTasks={[1, 2]} />);
   });
 });

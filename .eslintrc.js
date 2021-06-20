@@ -8,6 +8,7 @@ module.exports = {
     'plugin:testing-library/react',
     'plugin:jest-dom/recommended',
     'plugin:react/recommended',
+    'plugin:@typescript-eslint/recommended',
     'airbnb-typescript',
   ],
   globals: {
@@ -16,11 +17,7 @@ module.exports = {
   },
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    ecmaFeatures: {
-      jsx: true,
-    },
-    ecmaVersion: 12,
-    sourceType: 'module',
+    project: ['./tsconfig.json'],
   },
   plugins: [
     'react',
@@ -66,6 +63,6 @@ module.exports = {
       },
     ],
 
+    "react/require-default-props": "off"
   },
-  'react/jsx-filename-extension': [1, { extensions: ['.tsx', '.ts'] }],
 };

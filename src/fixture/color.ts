@@ -1,2 +1,2 @@
-export const original: string = '#a2b8de';
-export const highlight: string = '#356ccc';
+export const original = '#a2b8de';
+export const highlight = '#356ccc';

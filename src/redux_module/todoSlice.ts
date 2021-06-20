@@ -6,13 +6,13 @@ type TodoState = {
   currentTaskId: number
   nextTaskId: number
   tasks: {
-    [id: number]: {title: string, subTasks: number[]}
+    [id: number]: { title: string, subTasks: number[] }
   }
-}
+};
 
 type TaskWithTitle = {
   title: string
-}
+};
 
 const initialState: TodoState = {
   currentTaskId: 0,
@@ -20,8 +20,7 @@ const initialState: TodoState = {
   tasks: {
     0: { title: 'root', subTasks: [] },
   },
-}
-
+};
 
 const { actions, reducer } = createSlice({
   name: 'todo',
@@ -43,22 +42,21 @@ const { actions, reducer } = createSlice({
       state.nextTaskId = nextTaskId + 1;
     },
 
-    deleteTask: (state, action:  PayloadAction<number>) => {
+    deleteTask: (state, action: PayloadAction<number>) => {
       const { payload: idToDelete } = action;
 
       state.currentTaskId = 0;
 
       delete state.tasks[idToDelete];
 
-      const ids: number[] = Object.keys(state.tasks).map(id => parseInt(id, 10));
+      const ids: number[] = Object.keys(state.tasks).map((id) => parseInt(id, 10));
 
       ids.forEach((id) => {
-          const arr = state.tasks[id].subTasks;
-          state.tasks[id].subTasks = arr.filter(
-            (subTaskId) => subTaskId !== idToDelete,
-          );
-        },
-      );
+        const arr = state.tasks[id].subTasks;
+        state.tasks[id].subTasks = arr.filter(
+          (subTaskId) => subTaskId !== idToDelete,
+        );
+      });
     },
 
     updateCurrentTaskId: (state, action: PayloadAction<number>) => {
