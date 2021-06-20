@@ -16,9 +16,14 @@ module.exports = {
     given: 'readonly',
   },
   parser: '@typescript-eslint/parser',
-  parserOptions: {
-    project: ['./tsconfig.json'],
-  },
+  overrides: [
+    {
+      files: ['*.ts', '*.tsx'], 
+      parserOptions: {
+        project: ['./tsconfig.json'],
+      },
+    }
+  ],
   plugins: [
     'react',
     '@typescript-eslint',
