@@ -2,18 +2,18 @@
  * @jest-environment jsdom
  */
 
-import { fireEvent, render, RenderResult } from '@testing-library/react';
 import { useDispatch, useSelector } from 'react-redux';
+import { fireEvent, render, RenderResult } from '@testing-library/react';
 import given from 'given2'
 
-import Task from './Task';
 import { deleteTask, updateCurrentTaskId } from '../redux_module/todoSlice';
+import Task from './Task';
 
 
 describe('Task', () => {
   const dispatch = jest.fn();
 
-  const renderTask = ({ id }: {id: number}): RenderResult => {
+  const renderTask = (id: number): RenderResult => {
     return render(
       <Task
         id={id}
@@ -37,14 +37,14 @@ describe('Task', () => {
     }));
 
     it('is rendered', () => {
-      const { container } = renderTask({ id: 1 });
+      const { container } = renderTask(1);
 
       expect(container).toHaveTextContent('task1');
     });
 
     context('when title is cilcked', () => {
       it('updates currentTaskId', () => {
-        const { getByText } = renderTask({ id: 1 });
+        const { getByText } = renderTask(1);
         fireEvent.click(getByText('task1'));
 
         expect(dispatch).toBeCalledWith(updateCurrentTaskId(1));
@@ -58,7 +58,7 @@ describe('Task', () => {
     }));
 
     it('is not rendered', () => {
-      const { queryByText } = renderTask({ id: 0 });
+      const { queryByText } = renderTask(0);
 
       expect(queryByText('root')).not.toBeInTheDocument();
     });
@@ -72,7 +72,7 @@ describe('Task', () => {
     }));
 
     it('renders subTask title', () => {
-      const { container } = renderTask({ id: 1 });
+      const { container } = renderTask(1);
 
       expect(container).toHaveTextContent('task1');
       expect(container).toHaveTextContent('task2');
@@ -87,7 +87,7 @@ describe('Task', () => {
     }));
 
     it("doesn't renders subTask title", () => {
-      const { container } = renderTask({ id: 1 });
+      const { container } = renderTask(1);
 
       expect(container).toHaveTextContent('task1');
       expect(container).not.toHaveTextContent('task2');
@@ -100,7 +100,7 @@ describe('Task', () => {
     }));
 
     it('renders "완료" button', () => {
-      const { getByRole } = renderTask({ id: 1 });
+      const { getByRole } = renderTask(1);
 
       fireEvent.click(getByRole('button', { name: '완료' }));
 
@@ -117,7 +117,7 @@ describe('Task', () => {
     it('renders "펼치기" button to unfold subTasks', () => {
       given('isOpen', () => false);
 
-      const { container, getByRole } = renderTask({ id: 1 });
+      const { container, getByRole } = renderTask(1);
 
       expect(container).toHaveTextContent('task1');
       expect(container).not.toHaveTextContent('task2');
@@ -131,7 +131,7 @@ describe('Task', () => {
     it('renders "접기" button to fold subTasks', () => {
       given('isOpen', () => true);
 
-      const { container, getByRole } = renderTask({ id: 1 });
+      const { container, getByRole } = renderTask(1);
 
       expect(container).toHaveTextContent('task1');
       expect(container).toHaveTextContent('task2');
