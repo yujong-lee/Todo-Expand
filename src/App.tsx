@@ -8,6 +8,23 @@ import { original, highlight } from './fixture/color';
 import Input from './components/Input';
 import Task from './components/Task';
 
+type ParProps = {
+  isSelected: boolean
+};
+
+const P = styled.p<ParProps>(({ isSelected }) => ({
+  color: (isSelected) ? highlight : original,
+  fontSize: '2em',
+  '&:hover': {
+    fontWeight: 'bold',
+  },
+}));
+
+const Container = styled.div({
+  width: '80%',
+  margin: '0 auto',
+});
+
 type AppProps = {
   initialTaskId?: number
 };
@@ -19,26 +36,20 @@ export default function App({ initialTaskId }: AppProps): JSX.Element {
   const currentTaskId = useAppSelector((state) => state.todo.currentTaskId);
   const isSelected = ((initialTaskId || currentTaskId) === 0);
 
-  type H1Props = {
-    isSelected: boolean
-  };
-
-  const H1 = styled.h1<H1Props>`
-  background-color: ${(props) => ((props.isSelected) ? highlight : original)};
-`;
-
   return (
-    <>
-      <H1
-        onClick={handleClick}
-        isSelected={isSelected}
-      >
-        Todo-expand
-      </H1>
+    <Container>
+      <header>
+        <P
+          onClick={handleClick}
+          isSelected={isSelected}
+        >
+          Todo-expand
+        </P>
+      </header>
 
       <Input />
       <br />
       <Task id={0} />
-    </>
+    </Container>
   );
 }
