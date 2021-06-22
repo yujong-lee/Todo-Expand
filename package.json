@@ -7,7 +7,8 @@
     "start": "webpack serve",
     "test:unit": "jest",
     "coverage": "npm run test:unit -- --coverage",
-    "test": "npm run test:unit"
+    "test": "npm run test:unit",
+    "lint": "eslint . --ext .ts --ext .tsx."
   },
   "keywords": [],
   "author": "",
