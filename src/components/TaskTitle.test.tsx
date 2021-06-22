@@ -35,9 +35,9 @@ describe('TaskTitle', () => {
     it('renders button with highlight color', () => {
       const { getByRole } = renderTaskTitle();
 
-      expect(getByRole('button', { name: 'taskTitle' })).toHaveStyle(`
-        background-color: ${highlight};
-      `);
+      expect(getByRole('button', { name: 'taskTitle' })).toHaveStyle({
+        color: highlight,
+      });
     });
   });
 
@@ -47,9 +47,9 @@ describe('TaskTitle', () => {
     it('renders button with original color', () => {
       const { getByRole } = renderTaskTitle();
 
-      expect(getByRole('button', { name: 'taskTitle' })).toHaveStyle(`
-        background-color: ${original};
-      `);
+      expect(getByRole('button', { name: 'taskTitle' })).toHaveStyle({
+        color: original,
+      });
     });
   });
 });
