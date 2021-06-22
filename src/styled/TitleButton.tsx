@@ -4,13 +4,14 @@ import { original, highlight } from '../fixture/color';
 
 type ButtonProps = {
   isSelected: boolean
+  fontSize: string
 };
 
-const TitleButton = styled.button<ButtonProps>(({ isSelected }) => ({
+const TitleButton = styled.button<ButtonProps>(({ isSelected, fontSize }) => ({
+  fontSize,
   border: 0,
   color: (isSelected) ? highlight : original,
   textDecoration: 'none',
-  fontSize: '1.5em',
   background: 'transparent',
   marginBottom: 8,
   '&:hover': {
