@@ -2,6 +2,7 @@ import { ChangeEvent, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { addTask } from '../redux_module/todoSlice';
+import ActionButton from '../styled/ActionButton';
 
 type InputBoxProps = {
   initialTitle?: string
@@ -31,12 +32,12 @@ const InputBox = ({ initialTitle }: InputBoxProps): JSX.Element => {
         onChange={handleChange}
       />
 
-      <button
+      <ActionButton
         type="button"
         onClick={handleClick}
       >
         추가
-      </button>
+      </ActionButton>
     </>
   );
 };
