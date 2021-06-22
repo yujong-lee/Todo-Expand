@@ -1,18 +1,20 @@
 import { MouseEventHandler } from 'react';
 
+import ActionButton from '../styled/ActionButton';
+
 type CompleteButtonType = {
   id: number
   handleClick: MouseEventHandler<HTMLButtonElement>
 };
 
 const CompleteButton = ({ id, handleClick }: CompleteButtonType): JSX.Element => (
-  <button
+  <ActionButton
     type="button"
     onClick={handleClick}
     data-testid={`button-${id}`}
   >
     완료
-  </button>
+  </ActionButton>
 );
 
 export default CompleteButton;

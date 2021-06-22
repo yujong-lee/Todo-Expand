@@ -1,5 +1,7 @@
 import { MouseEventHandler } from 'react';
 
+import ActionButton from '../styled/ActionButton';
+
 type SubTasksToggleType = {
   taskId: number
   isOpen: boolean
@@ -7,13 +9,13 @@ type SubTasksToggleType = {
 };
 
 const SubTasksToggle = ({ taskId, isOpen, onClick }: SubTasksToggleType): JSX.Element => (
-  <button
+  <ActionButton
     type="button"
     onClick={onClick}
     data-testid={`button-${taskId}`}
   >
     {(isOpen) ? '접기' : '펼치기'}
-  </button>
+  </ActionButton>
 );
 
 export default SubTasksToggle;
