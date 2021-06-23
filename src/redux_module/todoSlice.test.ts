@@ -3,6 +3,7 @@ import reducer,
   addTask,
   deleteTask,
   restoreTask,
+  toggleOpen,
   updateCurrentTaskId,
 } from './todoSlice';
 
@@ -16,8 +17,8 @@ describe('todoSlice', () => {
         currentTaskId: 1,
         nextTaskId: 2,
         tasks: {
-          0: { title: 'root', subTasks: [1] },
-          1: { title: 'task1', subTasks: [] },
+          0: { title: 'root', subTasks: [1], isOpen: true },
+          1: { title: 'task1', subTasks: [], isOpen: true },
         },
       };
       const newState = {
@@ -25,9 +26,9 @@ describe('todoSlice', () => {
         currentTaskId: 1,
         nextTaskId: 3,
         tasks: {
-          0: { title: 'root', subTasks: [1] },
-          1: { title: 'task1', subTasks: [2] },
-          2: { title: 'task2', subTasks: [] },
+          0: { title: 'root', subTasks: [1], isOpen: true },
+          1: { title: 'task1', subTasks: [2], isOpen: true },
+          2: { title: 'task2', subTasks: [], isOpen: true },
         },
       };
 
@@ -45,8 +46,8 @@ describe('todoSlice', () => {
         currentTaskId: 1,
         nextTaskId: 2,
         tasks: {
-          0: { title: 'root', subTasks: [1] },
-          1: { title: 'task1', subTasks: [] },
+          0: { title: 'root', subTasks: [1], isOpen: true },
+          1: { title: 'task1', subTasks: [], isOpen: true },
         },
       };
 
@@ -59,13 +60,13 @@ describe('todoSlice', () => {
 
   it('deletes task, reset currentTaskId, and set restore data', () => {
     const restoreData1: RestoreData = {
-      task: { title: '첫번째 할일', subTasks: [] },
+      task: { title: '첫번째 할일', subTasks: [], isOpen: true },
       selfId: 1,
       parentId: 0,
     };
 
     const restoreData2: RestoreData = {
-      task: { title: '두번째 할일', subTasks: [] },
+      task: { title: '두번째 할일', subTasks: [], isOpen: true },
       selfId: 2,
       parentId: 0,
     };
@@ -75,15 +76,15 @@ describe('todoSlice', () => {
       currentTaskId: 2,
       nextTaskId: 2,
       tasks: {
-        0: { title: 'root', subTasks: [2] },
-        2: { title: '두번째 할일', subTasks: [] },
+        0: { title: 'root', subTasks: [2], isOpen: true },
+        2: { title: '두번째 할일', subTasks: [], isOpen: true },
       },
     };
     const newState = {
       recentDeleted: [restoreData1, restoreData2],
       currentTaskId: 0,
       nextTaskId: 2,
-      tasks: { 0: { title: 'root', subTasks: [] } },
+      tasks: { 0: { title: 'root', subTasks: [], isOpen: true } },
     };
 
     expect(reducer(
@@ -95,7 +96,7 @@ describe('todoSlice', () => {
   context('when recentDeleted is not empty', () => {
     it('retores recent deleted task', () => {
       const restoreData1: RestoreData = {
-        task: { title: '첫번째 할일', subTasks: [] },
+        task: { title: '첫번째 할일', subTasks: [], isOpen: true },
         selfId: 1,
         parentId: 0,
       };
@@ -105,8 +106,8 @@ describe('todoSlice', () => {
         currentTaskId: 0,
         nextTaskId: 2,
         tasks: {
-          0: { title: 'root', subTasks: [2] },
-          2: { title: '두번째 할일', subTasks: [] },
+          0: { title: 'root', subTasks: [2], isOpen: true },
+          2: { title: '두번째 할일', subTasks: [], isOpen: true },
         },
       };
 
@@ -115,9 +116,9 @@ describe('todoSlice', () => {
         currentTaskId: 0,
         nextTaskId: 2,
         tasks: {
-          0: { title: 'root', subTasks: [2, 1] },
-          1: { title: '첫번째 할일', subTasks: [] },
-          2: { title: '두번째 할일', subTasks: [] },
+          0: { title: 'root', subTasks: [2, 1], isOpen: true },
+          1: { title: '첫번째 할일', subTasks: [], isOpen: true },
+          2: { title: '두번째 할일', subTasks: [], isOpen: true },
         },
       };
 
@@ -133,8 +134,8 @@ describe('todoSlice', () => {
         currentTaskId: 0,
         nextTaskId: 2,
         tasks: {
-          0: { title: 'root', subTasks: [1] },
-          1: { title: '첫번째 할일', subTasks: [] },
+          0: { title: 'root', subTasks: [1], isOpen: true },
+          1: { title: '첫번째 할일', subTasks: [], isOpen: true },
         },
       };
       const newState = {
@@ -142,8 +143,8 @@ describe('todoSlice', () => {
         currentTaskId: 1,
         nextTaskId: 2,
         tasks: {
-          0: { title: 'root', subTasks: [1] },
-          1: { title: '첫번째 할일', subTasks: [] },
+          0: { title: 'root', subTasks: [1], isOpen: true },
+          1: { title: '첫번째 할일', subTasks: [], isOpen: true },
         },
       };
 
@@ -161,8 +162,8 @@ describe('todoSlice', () => {
         currentTaskId: 0,
         nextTaskId: 2,
         tasks: {
-          0: { title: 'root', subTasks: [1] },
-          1: { title: '첫번째 할일', subTasks: [] },
+          0: { title: 'root', subTasks: [1], isOpen: true },
+          1: { title: '첫번째 할일', subTasks: [], isOpen: true },
         },
       };
       expect(reducer(
@@ -170,5 +171,31 @@ describe('todoSlice', () => {
         restoreTask(),
       )).toEqual(oldState);
     });
+  });
+
+  it('toggles isOpen with taskId', () => {
+    const oldState = {
+      recentDeleted: [],
+      currentTaskId: 0,
+      nextTaskId: 2,
+      tasks: {
+        0: { title: 'root', subTasks: [1], isOpen: true },
+        1: { title: '첫번째 할일', subTasks: [], isOpen: true },
+      },
+    };
+
+    const newState = {
+      recentDeleted: [],
+      currentTaskId: 0,
+      nextTaskId: 2,
+      tasks: {
+        0: { title: 'root', subTasks: [1], isOpen: true },
+        1: { title: '첫번째 할일', subTasks: [], isOpen: false },
+      },
+    };
+    expect(reducer(
+      oldState,
+      toggleOpen(1),
+    )).toEqual(newState);
   });
 });

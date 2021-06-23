@@ -19,7 +19,7 @@ const initialState: TodoState = {
   currentTaskId: 0,
   nextTaskId: 1,
   tasks: {
-    0: { title: 'root', subTasks: [] },
+    0: { title: 'root', subTasks: [], isOpen: true },
   },
 };
 
@@ -35,7 +35,7 @@ const { actions, reducer } = createSlice({
         return;
       }
 
-      const newTask: Task = { title: newTaskTitle, subTasks: [] };
+      const newTask: Task = { title: newTaskTitle, subTasks: [], isOpen: true };
 
       const { currentTaskId, nextTaskId } = state;
 
@@ -91,6 +91,13 @@ const { actions, reducer } = createSlice({
     updateCurrentTaskId: (state, action: PayloadAction<number>) => {
       state.currentTaskId = action.payload;
     },
+
+    toggleOpen: (state, action: PayloadAction<number>) => {
+      const { payload: id } = action;
+      const { isOpen } = state.tasks[id];
+
+      state.tasks[id].isOpen = !isOpen;
+    },
   },
 });
 
@@ -99,6 +106,7 @@ export const {
   deleteTask,
   restoreTask,
   updateCurrentTaskId,
+  toggleOpen,
 } = actions;
 
 export default reducer;

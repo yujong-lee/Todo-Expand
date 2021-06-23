@@ -1,6 +1,7 @@
 export type Task = {
   title: string
   subTasks: number[]
+  isOpen: boolean
 };
 
 export type Tasks = {
