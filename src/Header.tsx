@@ -8,6 +8,7 @@ type HeaderProps = {
 
 const Header = ({ initialTaskId }: HeaderProps): JSX.Element => {
   const dispatch = useAppDispatch();
+
   const handleClick = () => dispatch(updateCurrentTaskId(0));
 
   const currentTaskId = (initialTaskId === undefined)

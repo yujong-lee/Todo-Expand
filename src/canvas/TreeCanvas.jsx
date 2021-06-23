@@ -1,26 +1,33 @@
 import P5Wrapper from "react-p5-wrapper";
 
-function TreeCanvas() {
+export default function TreeCanvas() {
   let autoplay = false;
   let clearsBackground = true;
   let windEnabled = true;
+
+  let time = 0;
+  let leafLevel = 2;
+  let levelMax = 8;
   let rotRange = 10;
+  let lengthRand = 1.0;
+
+  let startLength;
+  let startSize;
+
   let rotDecay = 1.1;
   let sizeDecay = 0.7;
   let lengthDecay = 0.91;
-  let levelMax = 8;
-  let leafLevel = 2;
+
   let leafChance = 0.3;
+
   let branchHue = 50;
   let leafHue = 150;
   let leafSat = 100;
+
   let mouseWind = 0;
   let mouseWindV = 0;
-  let startLength;
-  let startSize;
   let bgColor;
-  let time = 0;
-  let lengthRand = 1.0;
+
   let bloomWidthRatio = 0.6;
   let bloomSizeAverage = 15;
 
@@ -37,25 +44,34 @@ function TreeCanvas() {
   
   const sketch = (p5) => {
     class Node {
-      constructor(_len, _size, _rotRange, _level) {
-        this.flowerScale = 0.0;
-        this.leafScale = 0.0;
-        this.flowerScaleT = 1.0;
-        this.flowerBright = 255;
-        this.s = 0;
-        this.windFactor = 0;
-        this.len = _len * (1 + p5.random(-lengthRand, lengthRand));
+      constructor(_len, _size, _rotRange, _level, _test) {
         this.size = _size;
         this.level = _level;
+        this.len = _len * (1 + p5.random(-lengthRand, lengthRand));
         this.rot = p5.radians(p5.random(-_rotRange, _rotRange));
+        this.test = _test
+        
+        this.leafScale = 0.0;
+        this.flowerScale = 0.0;
+        this.flowerScaleT = 1.0;
+        this.flowerBright = 255;
 
-        if (this.level < leafLevel) this.rot *= 0.3;
-        if (this.level == 0 ) this.rot = 0;
+        this.s = 0;
+        this.windFactor = 1.0;
+
+        if (this.level < leafLevel) {
+          this.rot *= 0.3;
+        }
+        if (this.level === 0 ) {
+          this.rot = 0;
+        }
 
         this.windFactor = p5.random(0.2, 1);
         this.doesBloom = false;
 
-        if (this.level >= leafLevel && p5.random(1) < leafChance) this.doesBloom = true;
+        if ((this.level >= leafLevel) && (p5.random(1) < leafChance)) {
+          this.doesBloom = true;
+        }
 
         this.bloomSize = p5.random(bloomSizeAverage*0.7, bloomSizeAverage*1.3);
         this.leafRot = p5.radians(p5.random(-180, 180));
@@ -65,29 +81,36 @@ function TreeCanvas() {
 
         this.randomizeColor();
     
-        if (p5.random(1) < flowerChance) this.doesFlower = true;
+        if (p5.random(1) < flowerChance) {
+          this.doesFlower = true;
+        }
     
         const rr = _rotRange * rotDecay;
     
         if (this.level < levelMax) {
-          this.n1 = new Node(this.len*lengthDecay, this.size*sizeDecay, rr, this.level+1);
-          this.n2 = new Node(this.len*lengthDecay, this.size*sizeDecay, rr, this.level+1);
+          this.n1 = new Node(this.len*lengthDecay, this.size*sizeDecay, rr, this.level+1, this.test - 20);
+          this.n2 = new Node(this.len*lengthDecay, this.size*sizeDecay, rr, this.level+1, this.test + 20);
         }
       }
 
-
       draw() {
         p5.strokeWeight(this.size);
-        this.s += (1.0 - this.s) / (15 + (this.level*5));
+        this.s += (1.0 - this.s) / (15 + (this.level * 5));
         p5.scale(this.s);
         p5.push();
 
-        if (this.level >= leafLevel) p5.stroke(this.branchColor);
-        else p5.stroke(0);
+        if (this.level >= leafLevel) {
+          p5.stroke(this.branchColor);
+        }
+        else {
+          p5.stroke(0);
+        }
 
-        const rotOffset = p5.sin( p5.noise(p5.millis() * 0.000006  * (this.level*1) ) * 100 );
+        let rotOffset = p5.sin( p5.noise(p5.millis() * 0.000006  * (this.level * 1) ) * 100 );
 
-        if (!windEnabled) rotOffset = 0;
+        if (!windEnabled) {
+          rotOffset = 0;
+        }
 
         p5.rotate(this.rot + (rotOffset * 0.1 + mouseWind) * this.windFactor);
         p5.line(0, 0, 0, -this.len);
@@ -134,12 +157,16 @@ function TreeCanvas() {
         }
         p5.push();
 
-        if (this.n1) this.n1.draw();
+        if (this.n1) {
+          this.n1.draw();
+        }
 
         p5.pop();
         p5.push();
 
-        if (this.n2) this.n2.draw();
+        if (this.n2) {
+          this.n2.draw();
+        }
 
         p5.pop();
         p5.pop();
@@ -147,15 +174,18 @@ function TreeCanvas() {
     
       randomizeColor() {
         this.branchColor = p5.color(branchHue, p5.random(170, 255), p5.random(100, 200));
-        this.leafColor = p5.color(leafHue, leafSat, p5.random(100, 255));
+        this.leafColor = p5.color(leafHue, leafSat, p5.random(100 - this.test, 255));
         this.flowerBright = p5.random(200, 255);
     
-        if (this.n1) this.n1.randomizeColor();
-        if (this.n2) this.n2.randomizeColor();
+        if (this.n1) {
+          this.n1.randomizeColor();
+        }
+        if (this.n2) {
+          this.n2.randomizeColor();
+        }
       }
     }
   
-
 
     const randomizeBackground = ()  => {
       bgColor =  p5.color(p5.random(255), p5.random(0, 100), 255);
@@ -164,26 +194,35 @@ function TreeCanvas() {
     const reset = () => {
       // p5.background(bgColor);
       p5.background(255);
-      node = new Node(startLength, startSize, rotRange, 0);
+      node = new Node(startLength, startSize, rotRange, 0, 0);
     }
 
     const randomize = () => {
       randomizeBackground();
       randomizeColor();
+
       rotRange = p5.random(20, 60);
       rotDecay = p5.random(0.9, 1.1);
+
       startLength = p5.random(20, 80);
       startSize = p5.random(3, 20);
+
       lengthRand = p5.random(0.0, 0.2);
+
       leafChance = p5.random(0.3, 0.9);
+      leafLevel = p5.random(0, 4);
+
       sizeDecay = p5.random(0.6, 0.7);
       lengthDecay = p5.map(startLength, 20, 80, 1.1, 0.85);
-      leafLevel = p5.random(0, 4);
+      
       bloomWidthRatio = p5.random(0.01, 0.9);
       bloomSizeAverage = p5.random(10, 40);
+
       mDamp = 0.00002;
       wDamp = 0.005;
+
       mFriction = 0.96;
+
       flowerWidth = p5.random(5, 15);
       flowerHeight = p5.random(10, 30);
       flowerChance = 0.1;
@@ -194,7 +233,10 @@ function TreeCanvas() {
       leafHue = p5.random(0, 255);
       leafSat = p5.random(0, 255);
       flowerColor = p5.color(p5.random(255), p5.random(0, 255), 255);
-      if (node) node.randomizeColor();
+
+      if (node)  {
+        node.randomizeColor();
+      }
     }
     
     // p5.mousePressed = () => {
@@ -204,7 +246,7 @@ function TreeCanvas() {
     // }
 
     p5.setup = () => {
-        p5.createCanvas(840, 540, p5.P2D);
+        p5.createCanvas(940, 540, p5.P2D);
         p5.colorMode(p5.HSB);
 
         p5.ellipseMode(p5.CENTER);
@@ -216,7 +258,7 @@ function TreeCanvas() {
 
     p5.draw = () => {
       if (autoplay) {
-        time+=(0.4);
+        time++;
         if (time > 600) {
           time = 0;
           randomize();
@@ -238,10 +280,7 @@ function TreeCanvas() {
       p5.translate(p5.width/2, p5.height);
       node.draw();
     };
-
   };
 
   return <P5Wrapper sketch={sketch}/>;
 }
-
-export default TreeCanvas;
