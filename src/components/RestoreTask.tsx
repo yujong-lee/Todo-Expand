@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 
-import { restoreTask } from './redux_module/todoSlice';
-import ActionButton from './styled/ActionButton';
+import { restoreTask } from '../redux_module/todoSlice';
+import ActionButton from '../styled/ActionButton';
 
 const RestoreTask = (): JSX.Element => {
   const dispatch = useDispatch();
