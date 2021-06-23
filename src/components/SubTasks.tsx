@@ -4,11 +4,10 @@ import Task from './Task';
 
 type SubTasksProps = {
   id: number
-  tasks: number[]
 };
 
-const SubTasks = ({ id, tasks }: SubTasksProps): JSX.Element => {
-  const isOpen = useAppSelector((state) => state.todo.tasks[id].isOpen);
+const SubTasks = ({ id }: SubTasksProps): JSX.Element => {
+  const { isOpen, subTasks } = useAppSelector((state) => state.todo.tasks[id]);
 
   if (!isOpen) {
     return <></>;
@@ -16,7 +15,7 @@ const SubTasks = ({ id, tasks }: SubTasksProps): JSX.Element => {
 
   return (
     <ul>
-      {tasks.map((taskId) => (
+      {subTasks.map((taskId) => (
         <li key={taskId}>
           <Task id={taskId} />
         </li>

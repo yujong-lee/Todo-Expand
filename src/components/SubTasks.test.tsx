@@ -22,10 +22,7 @@ describe('SubTasks', () => {
 
   it('renders', () => {
     render((
-      <SubTasks
-        id={1}
-        tasks={[1, 2]}
-      />
+      <SubTasks id={1} />
     ));
   });
 });
