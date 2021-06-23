@@ -22,10 +22,10 @@ const Task = ({ id, isOpen = true }: TaskProps): JSX.Element => {
         isSubTasksOpen={isSubTasksOpen}
         setIsSubTasksOpen={setIsSubTasksOpen}
       />
-
-      {isSubTasksOpen
-        ? (<SubTasks subTasks={subTasks} />)
-        : null}
+      <SubTasks
+        tasks={subTasks}
+        isOpen={isSubTasksOpen}
+      />
     </>
   );
 };

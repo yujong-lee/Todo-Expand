@@ -20,6 +20,9 @@ describe('SubTasks', () => {
   });
 
   it('renders', () => {
-    render(<SubTasks subTasks={[1, 2]} />);
+    render(<SubTasks
+      tasks={[1, 2]}
+      isOpen={true}
+    />);
   });
 });

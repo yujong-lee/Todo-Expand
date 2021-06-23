@@ -2,17 +2,24 @@
 import Task from './Task';
 
 type SubTasksProps = {
-  subTasks: number[]
+  tasks: number[]
+  isOpen: boolean
 };
 
-const SubTasks = ({ subTasks }: SubTasksProps): JSX.Element => (
-  <ul>
-    {subTasks.map((subTaskId) => (
-      <li key={subTaskId}>
-        <Task id={subTaskId} />
-      </li>
-    ))}
-  </ul>
-);
+const SubTasks = ({ tasks, isOpen }: SubTasksProps): JSX.Element => {
+  if (!isOpen) {
+    return <></>;
+  }
+
+  return (
+    <ul>
+      {tasks.map((taskId) => (
+        <li key={taskId}>
+          <Task id={taskId} />
+        </li>
+      ))}
+    </ul>
+  );
+};
 
 export default SubTasks;
