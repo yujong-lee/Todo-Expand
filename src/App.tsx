@@ -5,6 +5,7 @@ import styled from '@emotion/styled';
 import Input from './components/Input';
 import Task from './components/Task';
 import Header from './Header';
+import RestoreTask from './RestoreTask';
 import TreeCanvas from './canvas/TreeCanvas';
 
 const Container = styled.div({
@@ -18,6 +19,7 @@ export default function App(): JSX.Element {
       <Container>
         <Header />
         <Input />
+        <RestoreTask />
         <br />
         <Task id={0} />
       </Container>
