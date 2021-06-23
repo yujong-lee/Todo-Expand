@@ -13,12 +13,24 @@ Tree, Task, it's Tresk.
 npm run start
 ```
 ## Test
+
+### Jest(with coverage) + Codeceptjs
 ```
 npm run test
 ```
+### Jest(with coverage)
+```
+npm run coverage
+```
+
+### Codeceptjs
+```
+npm run codeceptjs
+```
 
 ## Tree Implementation
-original code(drawing tree) was written by [godofsuncats](https://openprocessing.org/sketch/1210577). re-written by myself with `react-p5-wrapper`.
+original code(drawing tree) was written by [godofsuncats](https://openprocessing.org/sketch/1210577). 
+re-written by myself with `react-p5-wrapper`.
 
 
 
