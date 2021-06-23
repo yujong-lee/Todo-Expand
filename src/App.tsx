@@ -2,11 +2,12 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import styled from '@emotion/styled';
 
+import TreeCanvas from './canvas/TreeCanvas';
+
 import Input from './components/Input';
 import Task from './components/Task';
 import Header from './Header';
 import RestoreTask from './RestoreTask';
-import TreeCanvas from './canvas/TreeCanvas';
 
 const Container = styled.div({
   width: '80%',
