@@ -7,14 +7,10 @@
         "start": "webpack serve",
         "test:unit": "jest",
         "coverage": "npm run test:unit -- --coverage",
-        "test": "npm run test:unit",
-        "lint": "eslint . --ext .ts --ext .tsx.",
         "codeceptjs": "codeceptjs run --steps",
-        "codeceptjs:headless": "HEADLESS=true codeceptjs run --steps",
-        "codeceptjs:ui": "codecept-ui --app",
-        "codeceptjs:demo": "codeceptjs run --steps -c node_modules/@codeceptjs/examples",
-        "codeceptjs:demo:headless": "HEADLESS=true codeceptjs run --steps -c node_modules/@codeceptjs/examples",
-        "codeceptjs:demo:ui": "codecept-ui --app  -c node_modules/@codeceptjs/examples"
+        "test:e2e": "npm run codeceptjs",
+        "test": "npm run coverage && start-server-and-test start http://localhost:8080 test:e2e",
+        "lint": "eslint --ext ts,tsx ."
     },
     "keywords": [],
     "author": "",
