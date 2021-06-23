@@ -1,8 +1,9 @@
 /* eslint-disable no-param-reassign */
 
 import * as R from 'ramda';
-
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
+import { Task, RestoreData, TodoState } from './types/types';
 
 const stringToDecimal = (target: string): number => parseInt(target, 10);
 
@@ -13,22 +14,8 @@ const keysAsNumberFrom = (
   Object.keys(obj),
 );
 
-type Task = {
-  title: string
-  subTasks: number[]
-};
-
-type Tasks = {
-  [id: number]: Task
-};
-
-type TodoState = {
-  currentTaskId: number
-  nextTaskId: number
-  tasks: Tasks
-};
-
 const initialState: TodoState = {
+  recentDeleted: [],
   currentTaskId: 0,
   nextTaskId: 1,
   tasks: {
@@ -60,21 +47,45 @@ const { actions, reducer } = createSlice({
     },
 
     deleteTask: (state, action: PayloadAction<number>) => {
-      const { payload: idToDelete } = action;
-
       state.currentTaskId = 0;
 
-      state.tasks = R.omit([String(idToDelete)], state.tasks);
+      const { payload: targetId } = action;
+
+      const deletedTask = state.tasks[targetId];
+
+      state.tasks = R.omit([String(targetId)], state.tasks);
 
       const taskIds: number[] = keysAsNumberFrom(state.tasks);
 
       taskIds.forEach((id) => {
         const { subTasks } = state.tasks[id];
 
-        const newSubTasks = R.reject(R.equals(idToDelete), subTasks);
+        if (subTasks.includes(targetId)) {
+          const targetRemovedSubTasks = R.reject(R.equals(targetId), subTasks);
+          state.tasks[id].subTasks = targetRemovedSubTasks;
 
-        state.tasks[id].subTasks = newSubTasks;
+          const restoreData: RestoreData = {
+            task: deletedTask,
+            selfId: targetId,
+            parentId: id,
+          };
+
+          state.recentDeleted.push(restoreData);
+        }
       });
+    },
+
+    restoreTask: (state) => {
+      const restoreData = state.recentDeleted.pop();
+
+      if (!restoreData) {
+        return;
+      }
+
+      const { task, selfId, parentId } = restoreData;
+
+      state.tasks[selfId] = task;
+      state.tasks[parentId].subTasks.push(selfId);
     },
 
     updateCurrentTaskId: (state, action: PayloadAction<number>) => {
@@ -86,6 +97,7 @@ const { actions, reducer } = createSlice({
 export const {
   addTask,
   deleteTask,
+  restoreTask,
   updateCurrentTaskId,
 } = actions;
 
