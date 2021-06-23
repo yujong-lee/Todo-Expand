@@ -7,7 +7,7 @@ import TreeCanvas from './canvas/TreeCanvas';
 import Input from './components/Input';
 import Task from './components/Task';
 import Header from './Header';
-import RestoreTask from './RestoreTask';
+import RestoreTask from './components/RestoreTask';
 
 const Container = styled.div({
   width: '80%',
