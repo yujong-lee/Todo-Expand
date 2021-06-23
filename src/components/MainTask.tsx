@@ -20,35 +20,35 @@ const MainTask = ({
   id, title,
   isSelected, isRootTask, isSubTasksEmpty, isSubTasksOpen,
   handleClickTitle, handleClickComplete, handleClickDetail,
-}: MainTaskProps): JSX.Element => (
-  <>
-    {isRootTask
-      ? null
-      : (
-        <>
-          <TaskTitle
-            title={title}
-            isSelected={isSelected}
-            handleClick={handleClickTitle}
-          />
+}: MainTaskProps): JSX.Element => {
+  if (isRootTask) {
+    return <></>;
+  }
 
-          {isSubTasksEmpty
-            ? (
-              <CompleteButton
-                id={id}
-                handleClick={handleClickComplete}
-              />
-            )
-            : (
-              <SubTasksToggle
-                taskId={id}
-                isOpen={isSubTasksOpen}
-                onClick={handleClickDetail}
-              />
-            )}
-        </>
-      )}
-  </>
-);
+  return (
+    <>
+      <TaskTitle
+        title={title}
+        isSelected={isSelected}
+        handleClick={handleClickTitle}
+      />
+
+      {isSubTasksEmpty
+        ? (
+          <CompleteButton
+            id={id}
+            handleClick={handleClickComplete}
+          />
+        )
+        : (
+          <SubTasksToggle
+            taskId={id}
+            isOpen={isSubTasksOpen}
+            onClick={handleClickDetail}
+          />
+        )}
+    </>
+  );
+};
 
 export default MainTask;
