@@ -1,4 +1,5 @@
 import { useAppDispatch, useAppSelector } from './redux_module/hook';
+
 import { updateCurrentTaskId } from './redux_module/todoSlice';
 import TitleButton from './styled/TitleButton';
 
@@ -24,7 +25,7 @@ const Header = ({ initialTaskId }: HeaderProps): JSX.Element => {
         isSelected={isSelected}
         onClick={handleClick}
       >
-        Todo-expand
+        Tresk
       </TitleButton>
     </header>
   );

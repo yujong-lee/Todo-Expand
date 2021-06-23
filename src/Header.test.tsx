@@ -12,7 +12,7 @@ describe('Header', () => {
     it('renders header with highlight color', () => {
       const { getByText } = render(<Header initialTaskId={0} />);
 
-      expect(getByText('Todo-expand')).toHaveStyle({
+      expect(getByText('Tresk')).toHaveStyle({
         color: highlight,
       });
     });
@@ -22,7 +22,7 @@ describe('Header', () => {
     it('renders header with original color', () => {
       const { getByText } = render(<Header initialTaskId={1} />);
 
-      expect(getByText('Todo-expand')).toHaveStyle({
+      expect(getByText('Tresk')).toHaveStyle({
         color: original,
       });
     });
