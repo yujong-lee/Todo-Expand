@@ -6,17 +6,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fireEvent, render, RenderResult } from '@testing-library/react';
 import given from 'given2';
 
-import { deleteTask, updateCurrentTaskId } from '../redux_module/todoSlice';
+import { deleteTask, toggleOpen, updateCurrentTaskId } from '../redux_module/todoSlice';
 import Task from './Task';
 
 describe('Task', () => {
   const dispatch = jest.fn();
 
   const renderTask = (id: number): RenderResult => render((
-    <Task
-      id={id}
-      isOpen={given.isOpen}
-    />
+    <Task id={id} />
   ));
 
   beforeEach(() => {
@@ -62,10 +59,9 @@ describe('Task', () => {
   });
 
   context('when subTasks is opened', () => {
-    given('isOpen', () => true);
     given('tasks', () => ({
-      1: { title: 'task1', subTasks: [2] },
-      2: { title: 'task2', subTasks: [] },
+      1: { title: 'task1', subTasks: [2], isOpen: true },
+      2: { title: 'task2', subTasks: [], isOpen: true },
     }));
 
     it('renders subTask title', () => {
@@ -77,10 +73,9 @@ describe('Task', () => {
   });
 
   context('when subTasks is not opened', () => {
-    given('isOpen', () => false);
     given('tasks', () => ({
-      1: { title: 'task1', subTasks: [2] },
-      2: { title: 'task2', subTasks: [] },
+      1: { title: 'task1', subTasks: [2], isOpen: false },
+      2: { title: 'task2', subTasks: [], isOpen: false },
     }));
 
     it("doesn't renders subTask title", () => {
@@ -93,7 +88,7 @@ describe('Task', () => {
 
   context('when subTasks is empty', () => {
     given('tasks', () => ({
-      1: { title: 'task1', subTasks: [] },
+      1: { title: 'task1', subTasks: [], isOpen: true },
     }));
 
     it('renders "완료" button', () => {
@@ -106,13 +101,11 @@ describe('Task', () => {
   });
 
   context('when subTasks is not empty', () => {
-    given('tasks', () => ({
-      1: { title: 'task1', subTasks: [2] },
-      2: { title: 'task2', subTasks: [] },
-    }));
-
     it('renders "펼치기" button to unfold subTasks', () => {
-      given('isOpen', () => false);
+      given('tasks', () => ({
+        1: { title: 'task1', subTasks: [2], isOpen: false },
+        2: { title: 'task2', subTasks: [], isOpen: true },
+      }));
 
       const { container, getByRole } = renderTask(1);
 
@@ -121,12 +114,14 @@ describe('Task', () => {
 
       fireEvent.click(getByRole('button', { name: '펼치기' }));
 
-      expect(container).toHaveTextContent('task1');
-      expect(container).toHaveTextContent('task2');
+      expect(dispatch).toBeCalledWith(toggleOpen(1));
     });
 
     it('renders "접기" button to fold subTasks', () => {
-      given('isOpen', () => true);
+      given('tasks', () => ({
+        1: { title: 'task1', subTasks: [2], isOpen: true },
+        2: { title: 'task2', subTasks: [], isOpen: true },
+      }));
 
       const { container, getByRole } = renderTask(1);
 
@@ -135,8 +130,7 @@ describe('Task', () => {
 
       fireEvent.click(getByRole('button', { name: '접기' }));
 
-      expect(container).toHaveTextContent('task1');
-      expect(container).not.toHaveTextContent('task2');
+      expect(dispatch).toBeCalledWith(toggleOpen(1));
     });
   });
 });

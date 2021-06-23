@@ -11,20 +11,15 @@ describe('MainTaskContainer', () => {
   beforeEach(() => {
     (useSelector as jest.Mock).mockImplementation((selector) => selector({
       todo: {
+        currentTaskId: 0,
         tasks: {
-          0: { title: 'root', subTasks: [] },
+          0: { title: 'root', subTasks: [], isOpen: true },
         },
       },
     }));
   });
 
   it('renders', () => {
-    render(
-      <MainTaskContainer
-        id={0}
-        isSubTasksOpen={true}
-        setIsSubTasksOpen={jest.fn()}
-      />,
-    );
+    render(<MainTaskContainer id={0} />);
   });
 });

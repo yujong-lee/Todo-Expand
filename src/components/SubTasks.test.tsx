@@ -12,17 +12,20 @@ describe('SubTasks', () => {
     (useSelector as jest.Mock).mockImplementation((selector) => selector({
       todo: {
         tasks: {
-          1: { title: 'task1', subTasks: [] },
-          2: { title: 'task2', subTasks: [] },
+          1: { title: 'task1', subTasks: [2, 3], isOpen: true },
+          2: { title: 'task2', subTasks: [], isOpen: true },
+          3: { title: 'task3', subTasks: [], isOpen: true },
         },
       },
     }));
   });
 
   it('renders', () => {
-    render(<SubTasks
-      tasks={[1, 2]}
-      isOpen={true}
-    />);
+    render((
+      <SubTasks
+        id={1}
+        tasks={[1, 2]}
+      />
+    ));
   });
 });
