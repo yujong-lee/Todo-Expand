@@ -1,6 +1,6 @@
 /* eslint-disable import/no-cycle */
 
-import MainTaskContainer from './MainTaskContainer';
+import MainTask from './MainTask';
 import SubTasksContainer from './SubTasksContainer';
 
 type TaskProps = {
@@ -9,7 +9,7 @@ type TaskProps = {
 
 const Task = ({ id }: TaskProps): JSX.Element => (
   <>
-    <MainTaskContainer id={id} />
+    <MainTask id={id} />
     <SubTasksContainer id={id} />
   </>
 );
