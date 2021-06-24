@@ -5,9 +5,9 @@
 import { render } from '@testing-library/react';
 import { useSelector } from 'react-redux';
 
-import SubTasks from './SubTasks';
+import SubTasksContainer from './SubTasksContainer';
 
-describe('SubTasks', () => {
+describe('SubTasksContainer', () => {
   beforeEach(() => {
     (useSelector as jest.Mock).mockImplementation((selector) => selector({
       todo: {
@@ -21,11 +21,9 @@ describe('SubTasks', () => {
   });
 
   it('renders', () => {
-    render((
-      <SubTasks
-        isOpen={true}
-        subTasks={[1, 2]}
-      />
-    ));
+    const { getByText } = render(<SubTasksContainer id={1} />);
+
+    expect(getByText('task2')).toBeInTheDocument();
+    expect(getByText('task3')).toBeInTheDocument();
   });
 });

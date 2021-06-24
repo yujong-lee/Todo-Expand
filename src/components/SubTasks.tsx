@@ -1,14 +1,13 @@
 /* eslint-disable import/no-cycle */
-import { useAppSelector } from '../redux_module/hook';
+
 import Task from './Task';
 
 type SubTasksProps = {
-  id: number
+  isOpen: boolean
+  subTasks: number[]
 };
 
-const SubTasks = ({ id }: SubTasksProps): JSX.Element => {
-  const { isOpen, subTasks } = useAppSelector((state) => state.todo.tasks[id]);
-
+const SubTasks = ({ isOpen, subTasks }: SubTasksProps): JSX.Element => {
   if (!isOpen) {
     return <></>;
   }
