@@ -1,8 +1,7 @@
 import { MouseEventHandler } from 'react';
 
 import TaskTitle from './TaskTitle';
-import CompleteButton from './CompleteButton';
-import SubTasksToggle from './SubTasksToggle';
+import TaskButton from './TaskButton';
 
 type MainTaskProps = {
   id: number,
@@ -33,20 +32,13 @@ const MainTask = ({
         handleClick={handleClickTitle}
       />
 
-      {isSubTasksEmpty
-        ? (
-          <CompleteButton
-            id={id}
-            handleClick={handleClickComplete}
-          />
-        )
-        : (
-          <SubTasksToggle
-            taskId={id}
-            isOpen={isSubTasksOpen}
-            onClick={handleClickDetail}
-          />
-        )}
+      <TaskButton
+        id={id}
+        isSubTasksEmpty={isSubTasksEmpty}
+        isSubTasksOpen={isSubTasksOpen}
+        handleClickComplete={handleClickComplete}
+        handleClickDetail={handleClickDetail}
+      />
     </>
   );
 };

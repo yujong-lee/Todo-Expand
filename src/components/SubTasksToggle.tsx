@@ -5,13 +5,13 @@ import ActionButton from '../styled/ActionButton';
 type SubTasksToggleType = {
   taskId: number
   isOpen: boolean
-  onClick: MouseEventHandler<HTMLButtonElement>
+  handleClick: MouseEventHandler<HTMLButtonElement>
 };
 
-const SubTasksToggle = ({ taskId, isOpen, onClick }: SubTasksToggleType): JSX.Element => (
+const SubTasksToggle = ({ taskId, isOpen, handleClick }: SubTasksToggleType): JSX.Element => (
   <ActionButton
     type="button"
-    onClick={onClick}
+    onClick={handleClick}
     data-testid={`button-${taskId}`}
   >
     {(isOpen) ? '접기' : '펼치기'}

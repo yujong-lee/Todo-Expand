@@ -15,7 +15,7 @@ describe('SubTasksToggle', () => {
       <SubTasksToggle
         taskId={1}
         isOpen={given.isOpen}
-        onClick={handleClick}
+        handleClick={handleClick}
       />
     ))
   );
