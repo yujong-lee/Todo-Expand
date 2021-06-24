@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fireEvent, render, RenderResult } from '@testing-library/react';
 import given from 'given2';
 
-import { deleteTask, toggleOpen, updateCurrentTaskId } from '../redux_module/todoSlice';
+import { updateCurrentTaskId } from '../redux_module/todoSlice';
 import Task from './Task';
 
 describe('Task', () => {
@@ -83,54 +83,6 @@ describe('Task', () => {
 
       expect(container).toHaveTextContent('task1');
       expect(container).not.toHaveTextContent('task2');
-    });
-  });
-
-  context('when subTasks is empty', () => {
-    given('tasks', () => ({
-      1: { title: 'task1', subTasks: [], isOpen: true },
-    }));
-
-    it('renders "완료" button', () => {
-      const { getByRole } = renderTask(1);
-
-      fireEvent.click(getByRole('button', { name: '완료' }));
-
-      expect(dispatch).toBeCalledWith(deleteTask(1));
-    });
-  });
-
-  context('when subTasks is not empty', () => {
-    it('renders "펼치기" button to unfold subTasks', () => {
-      given('tasks', () => ({
-        1: { title: 'task1', subTasks: [2], isOpen: false },
-        2: { title: 'task2', subTasks: [], isOpen: true },
-      }));
-
-      const { container, getByRole } = renderTask(1);
-
-      expect(container).toHaveTextContent('task1');
-      expect(container).not.toHaveTextContent('task2');
-
-      fireEvent.click(getByRole('button', { name: '펼치기' }));
-
-      expect(dispatch).toBeCalledWith(toggleOpen(1));
-    });
-
-    it('renders "접기" button to fold subTasks', () => {
-      given('tasks', () => ({
-        1: { title: 'task1', subTasks: [2], isOpen: true },
-        2: { title: 'task2', subTasks: [], isOpen: true },
-      }));
-
-      const { container, getByRole } = renderTask(1);
-
-      expect(container).toHaveTextContent('task1');
-      expect(container).toHaveTextContent('task2');
-
-      fireEvent.click(getByRole('button', { name: '접기' }));
-
-      expect(dispatch).toBeCalledWith(toggleOpen(1));
     });
   });
 });
