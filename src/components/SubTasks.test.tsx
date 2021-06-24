@@ -20,12 +20,15 @@ describe('SubTasks', () => {
     }));
   });
 
-  it('renders', () => {
-    render((
+  it('renders tasks', () => {
+    const { getByText } = render((
       <SubTasks
         isOpen={true}
-        subTasks={[1, 2]}
+        subTasks={[2, 3]}
       />
     ));
+
+    expect(getByText('task2')).toBeInTheDocument();
+    expect(getByText('task3')).toBeInTheDocument();
   });
 });
