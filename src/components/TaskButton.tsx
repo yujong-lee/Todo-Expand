@@ -19,7 +19,6 @@ const TaskButton = ({
         id={id}
         handleClick={handleClickComplete}
       />
-
     )
     : (
       <SubTasksToggle
