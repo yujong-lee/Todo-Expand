@@ -3,7 +3,7 @@
 import * as R from 'ramda';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { Task, RestoreData, TodoState } from './types/types';
+import { Task, RestoreData, TodoState } from './types';
 
 const stringToDecimal = (target: string): number => parseInt(target, 10);
 

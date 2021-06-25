@@ -7,7 +7,7 @@ import reducer,
   updateCurrentTaskId,
 } from './todoSlice';
 
-import { RestoreData } from './types/types';
+import { RestoreData } from './types';
 
 describe('todoSlice', () => {
   context('when title is not empty string', () => {
