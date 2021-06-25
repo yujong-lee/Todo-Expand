@@ -13,11 +13,11 @@ Scenario('Can delete tasks', ({ I }) => {
   I.fillField('할 일', '세 번째 할 일');
   I.click('추가');
 
-  I.click('//*[@id="app"]/div[1]/ul/li[2]/button[2]');
+  I.click('//*[@id="app"]/div/div[1]/ul/li[2]/button[2]');
   I.dontSee('두 번째 할 일');
   I.see('첫 번째 할 일');
 
-  I.click('//*[@id="app"]/div[1]/ul/li[1]/ul/li/button[2]');
+  I.click('//*[@id="app"]/div/div[1]/ul/li[1]/ul/li/button[2]');
   I.dontSee('세 번째 할 일');
   I.see('첫 번째 할 일');
 });
