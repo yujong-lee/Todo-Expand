@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 
 import TreeCanvas from './canvas/TreeCanvas';
 
-import Input from './components/Input';
+import InputContainer from './components/InputContainer';
 import Task from './components/Task';
 import Header from './Header';
 import RestoreTask from './components/RestoreTask';
@@ -37,7 +37,7 @@ export default function App(): JSX.Element {
       <GridWrapper>
         <TasksContainer>
           <Header />
-          <Input />
+          <InputContainer />
           <RestoreTask />
           <Task id={0} />
         </TasksContainer>

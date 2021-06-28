@@ -1,45 +1,37 @@
-import { ChangeEvent, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { ChangeEventHandler, MouseEventHandler } from 'react';
 
-import { addTask } from '../redux_module/todoSlice';
 import ActionButton from '../styled/ActionButton';
 
-type InputBoxProps = {
-  initialTitle?: string
+type InputProps = {
+  value: string
+  fieldName: string
+  buttonName: string
+  handleChange: ChangeEventHandler<HTMLInputElement>
+  handleClick: MouseEventHandler<HTMLButtonElement>
 };
 
-const InputBox = ({ initialTitle }: InputBoxProps): JSX.Element => {
-  const dispatch = useDispatch();
+const Input = ({
+  value, fieldName, buttonName, handleChange, handleClick,
+}: InputProps): JSX.Element => (
+  <>
+    <label htmlFor="input-task">
+      {fieldName}
+    </label>
+    <input
+      type="text"
+      id="input-task"
+      placeholder={fieldName}
+      value={value}
+      onChange={handleChange}
+    />
 
-  const [taskTitle, setTaskTitle] = useState(initialTitle || '');
+    <ActionButton
+      type="button"
+      onClick={handleClick}
+    >
+      {buttonName}
+    </ActionButton>
+  </>
+);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => setTaskTitle(e.target.value);
-  const handleClick = () => {
-    dispatch(addTask(taskTitle));
-    setTaskTitle('');
-  };
-
-  return (
-    <>
-      <label htmlFor="input-task">
-        할 일
-      </label>
-      <input
-        type="text"
-        id="input-task"
-        placeholder="할 일"
-        value={taskTitle}
-        onChange={handleChange}
-      />
-
-      <ActionButton
-        type="button"
-        onClick={handleClick}
-      >
-        추가
-      </ActionButton>
-    </>
-  );
-};
-
-export default InputBox;
+export default Input;
